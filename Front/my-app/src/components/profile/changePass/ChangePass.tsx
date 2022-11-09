@@ -23,6 +23,7 @@ const ChangePass: React.FC = () =>{
         recaptchaToken: ""
     }
     const navigator = useNavigate();
+    const {isAuth} = useTypedSelector(store=>store.auth) 
     const {user} = useTypedSelector(store=>store.auth)
     const {executeRecaptcha } = useGoogleReCaptcha();
     const [isLoad, setLoad] = useState<boolean>(false);
@@ -74,7 +75,12 @@ const ChangePass: React.FC = () =>{
     const {handleChange,handleSubmit,errors, touched} = formik
     
     return(
-        <div className="row">
+        <div>
+            {
+                isAuth
+                ?
+                (
+                    <div className="row">
             <HomeLayout/>
             <UserNavbar/>
             
@@ -144,6 +150,14 @@ const ChangePass: React.FC = () =>{
                 
             </div>
             
+        </div>
+                )
+                :
+                <div className="row">
+                    <HomeLayout/>
+                    <h1>Вам необхідно авторизувaтись</h1>
+                </div>           
+            }
         </div>
     )
 }

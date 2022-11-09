@@ -6,13 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b93082d9-aa34-4701-b9c7-c6405bd76d09" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/configuration/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/configuration/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dto/UserDto/UserItemDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dto/UserDto/UserItemDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repositories/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repositories/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/AccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/configuration/security/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/configuration/security/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/repositories/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/repositories/UserRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/web/AccountController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/web/AccountController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front/my-app/src/components/profile/profileUpdate/ProfileUpdate.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Front/my-app/src/components/profile/profileUpdate/ProfileUpdate.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +56,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "D:/Мои работы/Программирование с использованием технологии Java и СУБД Oracle/Тема 7 - Working Images/app",
+    "last_opened_file_path": "D:/курсовая/Back",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0"

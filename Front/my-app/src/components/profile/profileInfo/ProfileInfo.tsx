@@ -7,28 +7,41 @@ import UserNavbar from "../../userPanel/index.tsx";
 const ProfileInfo: React.FC = () =>{
     const {user} = useTypedSelector(store=>store.auth)
     const url = http.defaults.baseURL
+    const {isAuth} = useTypedSelector(store=>store.auth) 
     
     return(
         <div>
-        <HomeLayout/>
-        <UserNavbar/>
-        <div style={{textAlign:"center"}}>
-        {user.role==="admin"?
-            <h1>Адмін</h1>
-            :
-            user.role==="driver"?
-            <h1>Водій</h1>
-            :
-            <h1>Замовник</h1>
+            {isAuth
+            ?
+            (
+                <div className="row">
+            <HomeLayout/>
+            <UserNavbar/>
+            <div style={{textAlign:"center"}}>
+            {user.role==="admin"?
+                <h1>Адмін</h1>
+                :
+                user.role==="driver"?
+                <h1>Водій</h1>
+                :
+                <h1>Замовник</h1>
 
+            }
+            <img src={url+"api/account/files/1200_"+user.image} alt="" />
+            <h1>{user.lastName}</h1>
+            <h2>{user.firstName}</h2>
+            <h2>{user.middleName}</h2>
+            <h3>{user.email}</h3>
+            <h3>{user.address}</h3>
+            </div>
+            </div>
+            )
+            :
+            <div className="row">
+                <HomeLayout/>
+                <h1>Вам необхідно авторизувaтись</h1>
+            </div>
         }
-        <img src={url+"api/account/files/1200_"+user.image} alt="" />
-        <h1>{user.lastName}</h1>
-        <h2>{user.firstName}</h2>
-        <h2>{user.middleName}</h2>
-        <h3>{user.email}</h3>
-        <h3>{user.address}</h3>
-        </div>
         </div>
     )
 }

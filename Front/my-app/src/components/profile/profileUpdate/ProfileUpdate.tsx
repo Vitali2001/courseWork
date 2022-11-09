@@ -28,6 +28,7 @@ export const ProfileUpdate: React.FC = () =>{
         recaptchaToken: "",
         role:""
     }
+    const {isAuth} = useTypedSelector(store=>store.auth) 
     const navigator = useNavigate();
     const dispatch = useDispatch();
     const url = http.defaults.baseURL
@@ -99,81 +100,93 @@ export const ProfileUpdate: React.FC = () =>{
     const {handleChange,handleSubmit,errors, touched,setFieldValue} = formik
     
     return(
-        <div className="row">
+        <div>
+        
+           {isAuth
+           ?
+           (
+            <div className="row">
             <HomeLayout/>
             <UserNavbar/>
-            
-            <div className="offset-md-3 col-md-6">
-                <h1 className="text-center">
-                Редагування профіля
-                </h1>
-                <FormikProvider value={formik}>
-                    <Form onSubmit={handleSubmit}>
-                        <InputComponent
-                            inputName="phone"
-                            title="Tелефон"
-                            touched={touched.phone}
-                            errors={errors.phone}
-                            handleChange={handleChange}
-                            defaultVal = {user.phone}
-                            />
-                            <InputComponent
-                            inputName="lastName"
-                            title="Прізвище"
-                            touched = "true"
-                            handleChange={handleChange}
-                            defaultVal={user.lastName}
-                            errors={errors.lastName}
-                            />
-                            <InputComponent
-                            inputName="firstName"
-                            title="Ім`я"
-                            touched={touched.firstName}
-                            errors={errors.firstName}
-                            handleChange={handleChange}
-                            defaultVal={user.firstName}
-                            />
-                            <InputComponent
-                            inputName="middleName"
-                            title="По-батькові"
-                            touched={touched.middleName}
-                            errors={errors.middleName}
-                            handleChange={handleChange}
-                            defaultVal = {user.middleName}
-                            />
-                            <InputComponent
-                            inputName="address"
-                            title="Адреса"
-                            touched={touched.address}
-                            errors={errors.address}
-                            handleChange={handleChange}
-                            defaultVal = {user.address}
-                            />
-                        <div className = "mb-3">
-                        <label htmlFor="image" className="form-label">Фото:</label>
-                        &nbsp;
-                        <CropperDialog
-                        onChange={setFieldValue}
-                        field="image"
-                        touched={touched.image}
-                        currentImg = {url+"api/account/files/600_"+user.image}
-                            />
-                        </div>
-
-                        {
-                        isLoad?
-                        <EclipseWidgetContainer/>
-                        :
-                        <button type="submit" className="btn btn-primary">
-                            Зберегти
-                        </button>
-                        }
-                    </Form>
-                </FormikProvider>
+                 <div className="offset-md-3 col-md-6">
+                 <h1 className="text-center">
+                 Редагування профіля
+                 </h1>
+                 
+                 <FormikProvider value={formik}>
+                     <Form onSubmit={handleSubmit}>
+                         <InputComponent
+                             inputName="phone"
+                             title="Tелефон"
+                             touched={touched.phone}
+                             errors={errors.phone}
+                             handleChange={handleChange}
+                             defaultVal = {user.phone}
+                             />
+                             <InputComponent
+                             inputName="lastName"
+                             title="Прізвище"
+                             touched = "true"
+                             handleChange={handleChange}
+                             defaultVal={user.lastName}
+                             errors={errors.lastName}
+                             />
+                             <InputComponent
+                             inputName="firstName"
+                             title="Ім`я"
+                             touched={touched.firstName}
+                             errors={errors.firstName}
+                             handleChange={handleChange}
+                             defaultVal={user.firstName}
+                             />
+                             <InputComponent
+                             inputName="middleName"
+                             title="По-батькові"
+                             touched={touched.middleName}
+                             errors={errors.middleName}
+                             handleChange={handleChange}
+                             defaultVal = {user.middleName}
+                             />
+                             <InputComponent
+                             inputName="address"
+                             title="Адреса"
+                             touched={touched.address}
+                             errors={errors.address}
+                             handleChange={handleChange}
+                             defaultVal = {user.address}
+                             />
+                         <div className = "mb-3">
+                         <label htmlFor="image" className="form-label">Фото:</label>
+                         &nbsp;
+                         <CropperDialog
+                         onChange={setFieldValue}
+                         field="image"
+                         touched={touched.image}
+                         currentImg = {url+"api/account/files/600_"+user.image}
+                             />
+                         </div>
+ 
+                         {
+                         isLoad?
+                         <EclipseWidgetContainer/>
+                         :
+                         <button type="submit" className="btn btn-primary">
+                             Зберегти
+                         </button>
+                         }
+                     </Form>
+                 </FormikProvider>
+                </div>
                 
-            </div>
-            
         </div>
+           )
+           :
+            <div className="row">
+                <HomeLayout/>
+                <h1>Вам необхідно авторизувaтись</h1>
+            </div>
+           }
+    </div>
     )
 }
 
