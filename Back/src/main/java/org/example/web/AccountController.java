@@ -88,7 +88,6 @@ public class AccountController {
             catch (Exception rce) {
                 String str = rce.getMessage();
             }
-
             List<UserItemDTO> users = mapper.userToUserItemDto_List(userRepository.findAll());
             boolean isUser = false;
             String emailUser = user.getEmail();
