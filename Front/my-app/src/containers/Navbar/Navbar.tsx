@@ -40,12 +40,19 @@ const Navbar: React.FC = () => {
                 </Link>
                 ):
                 ""} */}
+                <Link
+                className="nav-link"
+                aria-current="page"
+                to="/drivers"
+                >
+                Водії
+                </Link>
               </li>
               <ul className="navbar-nav me-auto mb-2 mb-md-0">
               <li className="nav-item">
-              <Link className="nav-link active" to="/products/create">
+              {/* <Link className="nav-link active" to="/products/create">
                   
-              </Link>
+              </Link> */}
               </li>
               </ul>
             </ul>

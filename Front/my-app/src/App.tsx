@@ -11,6 +11,7 @@ import Profile from './components/profile/profileInfo/index.tsx';
 import ProfileChange from './components/profile/profileUpdate/index.tsx';
 import ChangePassword from './components/profile/changePass/index.tsx';
 import Orders from './components/profile/orders/index.tsx';
+import Drivers from './components/drivers/index.tsx'
 
 
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="profileUpdate" element={<ProfileChange/>}/>
         <Route path="changePassword" element={<ChangePassword/>}/>
         <Route path="orders" element={<Orders/>}/>
+        <Route path = "drivers" element={<Drivers/>} />
       </Routes>
     </>
   );

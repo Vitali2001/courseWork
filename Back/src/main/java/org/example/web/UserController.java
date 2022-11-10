@@ -48,7 +48,7 @@ public class UserController {
     @GetMapping("/customers")
     public List<UserGetDTO> getCustomers()
     {
-        List<UserGetDTO> drivers = new ArrayList<UserGetDTO>();
+        List<UserGetDTO> customers = new ArrayList<UserGetDTO>();
         RoleEntity role = roleRepository.findByName("customer");
         List<UserItemDTO> users = mapper.userToUserItemDto_List(userRepository.findAll());
         for(UserItemDTO item : users)
@@ -58,10 +58,10 @@ public class UserController {
                 UserGetDTO user = new UserGetDTO(item.getEmail(), item.getPhone(), item.getLastName(),
                         item.getFirstName(),item.getMiddleName(),item.getAddress(),
                         item.getRole().toString(), item.getImage());
-                drivers.add(user);
+                customers.add(user);
             }
         }
-        return drivers;
+        return customers;
 
     }
 }
