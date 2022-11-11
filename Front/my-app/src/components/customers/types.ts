@@ -1,4 +1,4 @@
-export interface IDriverItem{
+export interface ICustomerItem{
     email: string,
     phone: string,
     lastName: string,
@@ -8,7 +8,7 @@ export interface IDriverItem{
     image: string
 }
 
-export interface DriversState{
-    list: Array<IDriverItem>,
+export interface CustomersState{
+    list: Array<ICustomerItem>,
     loading: boolean
 }

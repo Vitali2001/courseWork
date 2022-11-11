@@ -30,16 +30,6 @@ const Navbar: React.FC = () => {
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
               <li className="nav-item">
-                {/* {isAuth?(
-                  <Link
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/create"
-                >
-                 
-                </Link>
-                ):
-                ""} */}
                 <Link
                 className="nav-link"
                 aria-current="page"
@@ -50,9 +40,13 @@ const Navbar: React.FC = () => {
               </li>
               <ul className="navbar-nav me-auto mb-2 mb-md-0">
               <li className="nav-item">
-              {/* <Link className="nav-link active" to="/products/create">
-                  
-              </Link> */}
+              <Link
+                className="nav-link"
+                aria-current="page"
+                to="/customers"
+                >
+                Замовники
+                </Link>
               </li>
               </ul>
             </ul>

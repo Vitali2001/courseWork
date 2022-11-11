@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import HomeLayout from "../../containers/Navbar/index.tsx"
 import {useTypedSelector} from "../../hooks/usedTypedSelector.ts"
-import {IDriverItem} from "./types.ts"
+import {ICustomerItem} from "./types.ts"
 import axios from "axios"
 import http from "../../http.common"
 import EclipseWidgetContainer from "../../components/Eclipse/index.tsx"
 import { useNavigate } from 'react-router-dom';
 
-const DriversView: React.FC = () =>{
+const CustomersView: React.FC = () =>{
    
     const navigator = useNavigate()
-    const {list, loading} = useTypedSelector(store=>store.drivers); 
+    const {list, loading} = useTypedSelector(store=>store.customers); 
     const dispatch = useDispatch();
     const url = http.defaults.baseURL
 
@@ -23,18 +23,18 @@ const DriversView: React.FC = () =>{
           type: "CLEAR_TABLE"
         })
         dispatch({
-            type: "GET_LIST_DRIVER",
+            type: "GET_LIST_CUSTOMER",
           });
-          axios.get<Array<IDriverItem>>("http://localhost:8080/api/users/drivers").then((resp) => {
+          axios.get<Array<ICustomerItem>>("http://localhost:8080/api/users/customers").then((resp) => {
             dispatch({
-              type: "GET_LIST_DRIVER_SUCCESS",
+              type: "GET_LIST_CUSTOMER_SUCCESS",
               payload: resp.data,
             });
            
           });
         
       },[dispatch]);
-      function OnClickDriver(item : any){
+      function OnClickCustomer(item : any){
         dispatch({
           type: "SET_CURRENT_USER",
           payload: item
@@ -43,7 +43,7 @@ const DriversView: React.FC = () =>{
       }
 
       const listUser = list.map((item) => (
-        <tr key={item.email} onClick={(e)=>OnClickDriver(item)}>
+        <tr key={item.email} onClick={(e)=>OnClickCustomer(item)}>
           <th><img src={url+"api/account/files/150_"+item.image} alt=""/></th>
           <th>{item.lastName}</th>
           <th>{item.firstName}</th>
@@ -55,7 +55,7 @@ const DriversView: React.FC = () =>{
     return(
         <div>
         <HomeLayout/>
-        <h1  style={{textAlign:"center"}}>Водії</h1>
+        <h1  style={{textAlign:"center"}}>Замовники</h1>
         {
           loading?
           <EclipseWidgetContainer/>
@@ -76,4 +76,4 @@ const DriversView: React.FC = () =>{
     )
 }
 
-export default DriversView
+export default CustomersView

@@ -12,6 +12,8 @@ import ProfileChange from './components/profile/profileUpdate/index.tsx';
 import ChangePassword from './components/profile/changePass/index.tsx';
 import Orders from './components/profile/orders/index.tsx';
 import Drivers from './components/drivers/index.tsx'
+import CurrentUser from "./components/curentUser/index.tsx"
+import Customers from './components/customers/index.tsx';
 
 
 
@@ -30,6 +32,8 @@ function App() {
         <Route path="changePassword" element={<ChangePassword/>}/>
         <Route path="orders" element={<Orders/>}/>
         <Route path = "drivers" element={<Drivers/>} />
+        <Route path = "current_user" element={<CurrentUser/>}/>
+        <Route path = "customers" element={<Customers/>} />
       </Routes>
     </>
   );
