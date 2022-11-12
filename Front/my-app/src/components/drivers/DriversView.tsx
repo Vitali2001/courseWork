@@ -8,13 +8,13 @@ import http from "../../http.common"
 import EclipseWidgetContainer from "../../components/Eclipse/index.tsx"
 import { useNavigate } from 'react-router-dom';
 
+
 const DriversView: React.FC = () =>{
    
     const navigator = useNavigate()
     const {list, loading} = useTypedSelector(store=>store.drivers); 
     const dispatch = useDispatch();
     const url = http.defaults.baseURL
-
     useEffect(() => {
       dispatch({
         type: "CLEAR_CURRENT_USER"
@@ -52,7 +52,7 @@ const DriversView: React.FC = () =>{
       ));
     
 
-    return(
+   return(
         <div>
         <HomeLayout/>
         <h1  style={{textAlign:"center"}}>Водії</h1>
@@ -73,7 +73,7 @@ const DriversView: React.FC = () =>{
           )
         }
         </div>
-    )
+    ) 
 }
 
 export default DriversView

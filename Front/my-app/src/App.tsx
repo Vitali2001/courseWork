@@ -14,13 +14,14 @@ import Orders from './components/profile/orders/index.tsx';
 import Drivers from './components/drivers/index.tsx'
 import CurrentUser from "./components/curentUser/index.tsx"
 import Customers from './components/customers/index.tsx';
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 
 
 
 function App() {
   return (
     <>
-
+      <GoogleReCaptchaProvider reCaptchaKey="6Ldq6DoiAAAAACFBIC5trh12V5U9OQ6l24o5RaLC">
       <Routes>
         <Route path="/" element={<HomeLayout/>}/>
         <Route path="/home" element={<HomePage/>}/>
@@ -35,6 +36,7 @@ function App() {
         <Route path = "current_user" element={<CurrentUser/>}/>
         <Route path = "customers" element={<Customers/>} />
       </Routes>
+      </GoogleReCaptchaProvider>
     </>
   );
 }
