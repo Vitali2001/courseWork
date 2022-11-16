@@ -12,10 +12,9 @@ const Navbar: React.FC = () => {
   return (
     <header>
       <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div className="container" style={{marginLeft: "0px"}}>
         <Link className="navbar-brand" to="/home">
-            Перевезення вантажів
-          </Link>
+          Перевезення вантажів
+        </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -30,42 +29,38 @@ const Navbar: React.FC = () => {
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
               <li className="nav-item">
-                <Link
-                className="nav-link"
-                aria-current="page"
-                to="/drivers"
+                  <Link
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/drivers"
                 >
-                Водії
+                  Водії
                 </Link>
               </li>
               <ul className="navbar-nav me-auto mb-2 mb-md-0">
               <li className="nav-item">
-              <Link
-                className="nav-link"
-                aria-current="page"
-                to="/customers"
-                >
-                Замовники
-                </Link>
+              <Link className="nav-link active" to="/customers">
+                  Замовники
+              </Link>
               </li>
               </ul>
             </ul>
             {isAuth?(
-              <ul className="navbar-nav"style={{margin:"-100px"}}>
+              <ul className="navbar-nav">
               <li className="nav-item">
                 <Link className="nav-link" to="/profile" >
                 <img src={url+"api/account/files/32_"+user?.image} style={{borderRadius:"100px", margin:"-5px"}}
                  width="40px" alt=""/>
                 </Link>
               </li>
-              <li className="nav-item" style={{marginLeft:"20px"}}>
+              <li className="nav-item">
                 <Link className="nav-link" to="/logout">
                   Вихід
                 </Link>
               </li>
             </ul>
             ):
-            <ul className="navbar-nav" style={{margin:"-90px"}}>
+            <ul className="navbar-nav">
             <li className="nav-item">
               <Link className="nav-link" to="/login">
                 Вхід
@@ -79,7 +74,6 @@ const Navbar: React.FC = () => {
           </ul>
           }
           </div>
-        </div>
       </nav>
     </header>
   );

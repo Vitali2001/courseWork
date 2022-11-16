@@ -142,7 +142,7 @@ const CropperDialog: React.FC<ICropperDialog> = ({
                 data-bs-dismiss="modal"
                 onClick={toggleModal}
               >
-                Скасувать
+                Скасувати
               </button>
               <button type="button" className="btn btn-primary" onClick={handleCroppedImage}>
                 Обрати фото

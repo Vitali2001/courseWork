@@ -13,3 +13,7 @@ export interface CurrentUserState{
     currentUser: ICurrentUser,
     selected: boolean
 } 
+export interface IDeleteUser{
+    email: string,
+    reCaptchaToken: string
+}

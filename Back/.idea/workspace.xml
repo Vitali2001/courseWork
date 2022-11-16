@@ -6,14 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="b93082d9-aa34-4701-b9c7-c6405bd76d09" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/configuration/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/configuration/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/storage/FileSystemStorageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/storage/FileSystemStorageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/AccountController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/configuration/security/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/configuration/security/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/storage/FileSystemStorageService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/storage/FileSystemStorageService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/web/AccountController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/web/AccountController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/web/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/web/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/1200_2eb5d856-8d2c-4fdd-996a-004004fb34ee.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/1200_7fc40ef0-5b52-438a-b519-8c7a5a0d4632.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/150_2eb5d856-8d2c-4fdd-996a-004004fb34ee.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/150_7fc40ef0-5b52-438a-b519-8c7a5a0d4632.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/300_2eb5d856-8d2c-4fdd-996a-004004fb34ee.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/300_7fc40ef0-5b52-438a-b519-8c7a5a0d4632.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/32_2eb5d856-8d2c-4fdd-996a-004004fb34ee.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/32_7fc40ef0-5b52-438a-b519-8c7a5a0d4632.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/600_2eb5d856-8d2c-4fdd-996a-004004fb34ee.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/600_7fc40ef0-5b52-438a-b519-8c7a5a0d4632.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

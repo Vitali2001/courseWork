@@ -187,6 +187,7 @@ public class UserController {
             }
             UserEntity user = userRepository.findByEmail(userDel.getEmail());
             try{
+                storageService.removeFile(user.getImage());
                 userRepository.deleteById(user.getId());
                 return "Користувача було видалено!";
             }
