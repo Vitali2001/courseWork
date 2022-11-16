@@ -1,7 +1,7 @@
 import { CurrentUserState } from "./types.ts";
 
 const initialState : CurrentUserState = {
-    user: undefined,
+  currentUser: undefined,
     selected: false
 }
 
@@ -11,13 +11,13 @@ export const currentUserReducer = (state = initialState, action: any): CurrentUs
         return {
           ...state,
           selected: false,
-          user: undefined
+          currentUser: undefined
         };
       case "SET_CURRENT_USER":
         return {
           ...state,
           selected: true,
-          user: action.payload,
+          currentUser: action.payload,
         };
     }
     return state

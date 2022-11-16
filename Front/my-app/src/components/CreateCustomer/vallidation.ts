@@ -6,5 +6,8 @@ export const Validator = yup.object({
   password: yup.string().required("Поле пароль є обов'язковим!"),
   phone: yup.string().required("Поле телефон є обов'язковим!"),
   image: yup.string().required("Оберіть фото (для вибору фото натисніть на зображення)!"),
-  age: yup.string().required("Поле вік є обов'язковим!"),
+  address: yup.string().required("Поле адреса є обов'язковим!"),
+  lastName: yup.string().required("Поле прізвище є обов'язковим!"),
+  firstName: yup.string().required("Поле ім`я є обов'язковим!"),
+  middleName: yup.string().required("Поле по-батькові є обов'язковим!"),
 });

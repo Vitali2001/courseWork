@@ -87,7 +87,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //users
                 .antMatchers("/api/users/drivers").permitAll()
                 .antMatchers("/api/users/customers").permitAll()
-                /*.antMatchers("/create").hasAuthority(Roles.Admin)*/
+                .antMatchers("/api/users/addUser").hasAuthority(Roles.Admin)
+                .antMatchers("/api/users/updateUser").hasAuthority(Roles.Admin)
+                .antMatchers("/api/users/deleteUser").hasAuthority(Roles.Admin)
+
 
                 .antMatchers("/files/**").permitAll()
                 .antMatchers("/static/**").permitAll() //.hasAuthority(Roles.Admin)

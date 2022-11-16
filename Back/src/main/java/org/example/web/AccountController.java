@@ -143,6 +143,8 @@ public class AccountController {
             {
                 if(!userUp.getImage().equals(""))
                 {
+                    String img = user.getImage();
+                    storageService.removeFile(img);
                     String fileName = storageService.store(userUp.getImage());
                     user.setImage(fileName);
                 }

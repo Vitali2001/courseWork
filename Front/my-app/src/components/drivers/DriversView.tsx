@@ -19,6 +19,7 @@ const DriversView: React.FC = () =>{
     const [warningSearch, setWarningSearch] = useState("");
     const url = http.defaults.baseURL
     const [valueSort, setValuesort] = useState('default');
+    const {user} = useTypedSelector(store=>store.auth)
 
     useEffect(() => {
       dispatch({
@@ -39,6 +40,9 @@ const DriversView: React.FC = () =>{
           });
         
       },[dispatch]);
+      function OnAddDriver(){
+        navigator("/add_driver")
+      }
       function OnClickDriver(item : any){
         dispatch({
           type: "SET_CURRENT_USER",
@@ -134,6 +138,17 @@ const DriversView: React.FC = () =>{
         <div>
         <HomeLayout/>
         <h1  style={{textAlign:"center"}}>Водії</h1>
+        {
+          user !== undefined && user.role === "admin"
+          ?
+          (
+            <div style={{margin:"10px",textAlign:"right"}}> 
+              <button type="button" className="btn btn-primary" onClick={OnAddDriver}>Додати водія</button>
+            </div>
+          )
+          :
+          <div></div>
+        }
         {
           loading?
           <EclipseWidgetContainer/>

@@ -5,19 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b93082d9-aa34-4701-b9c7-c6405bd76d09" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/uploaded/1200_7346bae8-f475-49f9-a395-c9e0573c9138.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uploaded/1200_b97b097a-f673-4fe2-b367-ef7fbd8449ae.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uploaded/150_7346bae8-f475-49f9-a395-c9e0573c9138.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uploaded/150_b97b097a-f673-4fe2-b367-ef7fbd8449ae.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uploaded/300_7346bae8-f475-49f9-a395-c9e0573c9138.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uploaded/300_b97b097a-f673-4fe2-b367-ef7fbd8449ae.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uploaded/32_7346bae8-f475-49f9-a395-c9e0573c9138.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uploaded/32_b97b097a-f673-4fe2-b367-ef7fbd8449ae.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uploaded/600_7346bae8-f475-49f9-a395-c9e0573c9138.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uploaded/600_b97b097a-f673-4fe2-b367-ef7fbd8449ae.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Front/my-app/src/components/customers/CustomersView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Front/my-app/src/components/customers/CustomersView.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Front/my-app/src/components/drivers/DriversView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Front/my-app/src/components/drivers/DriversView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/configuration/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/configuration/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/storage/FileSystemStorageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/storage/FileSystemStorageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/AccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/configuration/security/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/configuration/security/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/storage/FileSystemStorageService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/storage/FileSystemStorageService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/web/AccountController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/web/AccountController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/web/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/web/UserController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

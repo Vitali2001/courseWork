@@ -10,6 +10,6 @@ export interface ICurrentUser{
 }
 
 export interface CurrentUserState{
-    user: ICurrentUser,
+    currentUser: ICurrentUser,
     selected: boolean
 } 

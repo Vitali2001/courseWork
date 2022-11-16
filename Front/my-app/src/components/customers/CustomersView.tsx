@@ -18,6 +18,7 @@ const CustomersView: React.FC = () =>{
     const [warningSearch, setWarningSearch] = useState("");
     const [search,setSearch] = useState('')
     const [valueSort, setValuesort] = useState('default');
+    const {user} = useTypedSelector(store=>store.auth)
 
     useEffect(() => {
       dispatch({
@@ -44,6 +45,9 @@ const CustomersView: React.FC = () =>{
           payload: item
         })
         navigator("/current_user")
+      }
+      function OnAddCustomer(){
+        navigator("/add_customer")
       }
       let arrs: ICustomerItem = []
       function OnChangeSearch(event){
@@ -134,6 +138,17 @@ const CustomersView: React.FC = () =>{
       <div>
       <HomeLayout/>
       <h1  style={{textAlign:"center"}}>Замовники</h1>
+      {
+          user !== undefined && user.role === "admin"
+          ?
+          (
+            <div style={{margin:"10px",textAlign:"right"}}> 
+              <button type="button" className="btn btn-primary" onClick={OnAddCustomer}>Додати замовника</button>
+            </div>
+          )
+          :
+          <div></div>
+        }
       {
         loading?
         <EclipseWidgetContainer/>
