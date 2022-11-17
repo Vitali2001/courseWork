@@ -90,7 +90,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/users/addUser").hasAuthority(Roles.Admin)
                 .antMatchers("/api/users/updateUser").hasAuthority(Roles.Admin)
                 .antMatchers("/api/users/deleteUser").hasAuthority(Roles.Admin)
-
+                //orders
+                .antMatchers("/api/orders/NotAcceptedOrders").permitAll()
 
                 .antMatchers("/files/**").permitAll()
                 .antMatchers("/static/**").permitAll() //.hasAuthority(Roles.Admin)

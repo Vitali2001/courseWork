@@ -54,7 +54,6 @@ public class UserController {
                 }
             }
             return drivers;
-
     }
     @GetMapping("/customers")
     public List<UserGetDTO> getCustomers()

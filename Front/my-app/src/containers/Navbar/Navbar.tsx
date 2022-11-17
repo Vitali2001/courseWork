@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import {useTypedSelector} from "../../hooks/usedTypedSelector.ts"
-/* import { store } from "../../../store/index.ts"; */
 import http from "../../http.common.js"
 
 const Navbar: React.FC = () => {

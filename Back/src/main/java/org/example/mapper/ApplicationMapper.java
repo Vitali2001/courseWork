@@ -10,8 +10,6 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ApplicationMapper {
-   /* UserItemDTO userToUserItemDTO(UserEntity user);*/
     List<UserItemDTO> userToUserItemDto_List(List<UserEntity> users);
     UserEntity userCreateDtoToUserEntity(UserCreateDTO user);
-    /*UserUpdateSuccessDTO userEntityToUserUpdateSuccessDTO(UserEntity user);*/
 }
