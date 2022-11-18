@@ -1,9 +1,9 @@
 import OrdersView from "./OrdersView.tsx"
 import React from "react"
 
-const OrdersProfile = () =>{
+const Orders = () =>{
     return(
         <OrdersView/>
     )
 }
-export default OrdersProfile
+export default Orders

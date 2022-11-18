@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { IInput } from "./types";
 
-const InputComponent: React.FC<IInput> = ({
+const SelectComponent: React.FC<IInput> = ({
   inputName,
   title,
   errors,
@@ -34,4 +34,4 @@ const InputComponent: React.FC<IInput> = ({
   );
 };
 
-export default InputComponent;
+export default SelectComponent;

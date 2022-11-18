@@ -18,7 +18,6 @@ public class Main {
     @Bean
     CommandLineRunner init(StorageService storageService, IDatabaseSeed databaseSeed) {
         return (args) -> {
-            //storageService.deleteAll();
             try {
                 databaseSeed.Seed();
                 storageService.init();

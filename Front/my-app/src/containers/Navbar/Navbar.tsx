@@ -43,6 +43,13 @@ const Navbar: React.FC = () => {
               </Link>
               </li>
               </ul>
+              <ul className="navbar-nav me-auto mb-2 mb-md-0">
+              <li className="nav-item">
+              <Link className="nav-link active" to="/orders">
+                  Замовлення
+              </Link>
+              </li>
+              </ul>
             </ul>
             {isAuth?(
               <ul className="navbar-nav">

@@ -25,7 +25,7 @@ const UserPanel: React.FC = () =>{
             </Link>
             </li>
             <li className="nav-item">
-            <Link className="nav-link " to="/orders">
+            <Link className="nav-link " to="/ordersProfile">
                   Замовлення
             </Link>
             </li>

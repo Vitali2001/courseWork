@@ -6,13 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b93082d9-aa34-4701-b9c7-c6405bd76d09" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/configuration/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/configuration/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mapper/ApplicationMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mapper/ApplicationMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/services/DatabaseSeed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/services/DatabaseSeed.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/web/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/web/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/org/example/mapper/ApplicationMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/org/example/mapper/ApplicationMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entity/OrderEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entity/OrderEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/web/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/web/OrderController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Front/my-app/src/containers/Navbar/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Front/my-app/src/containers/Navbar/Navbar.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +60,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "D:/Мои работы/Программирование с использованием технологии Java и СУБД Oracle/Тема 7 - Working Images/app",
+    "last_opened_file_path": "D:/курсовая/Back",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0"
