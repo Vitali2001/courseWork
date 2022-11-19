@@ -5,6 +5,7 @@ import {currentUserReducer} from "../components/curentUser/reducer.ts"
 import {customerReducer} from "../components/customers/reducer.ts"
 import { orderReducer } from "../components/orders/reducer.ts";
 import { currentOrderReducer } from "../components/currentOrder/reducer.ts";
+import {ordersUserReducer} from "../components/profile/orders/reducer.ts"
 
 export const rootReducer = combineReducers({
     auth: authReducer,
@@ -12,7 +13,8 @@ export const rootReducer = combineReducers({
     currentUser: currentUserReducer,
     customers: customerReducer,
     orders: orderReducer,
-    currentOrder: currentOrderReducer
+    currentOrder: currentOrderReducer,
+    ordersUser: ordersUserReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

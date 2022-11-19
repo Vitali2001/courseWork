@@ -29,6 +29,8 @@ public class UserEntity {
     private String MiddleName;
     @Column(length = 100,nullable = false)
     private String Address;
+    @Column(nullable = true)
+    private ArrayList<Integer> raiting;
 
     @ManyToOne
     @JoinColumn(name = "role_id",nullable = false)

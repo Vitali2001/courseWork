@@ -1,4 +1,4 @@
-export interface IOrderCurrent{
+export interface IOrderItem{
     id: number,
     name: string,
     fromRegion: string,
@@ -10,24 +10,18 @@ export interface IOrderCurrent{
     weight: string,
     image: string,
     price: number,
-    emailCustomer: string
-}
-
-
-export interface CurrentOrderState{
-    currentOrder: IOrderCurrent,
-    selected: boolean
-}
-
-export interface IDriverIsOrder{
-    id: number,
-    emailDriver: string,
-    recaptchaToken: string
-}
-export interface IDriverSetOrder{
-    id: number,
-    email: string,
     date: Date,
+    customerMark: number,
+    driverMark: number 
+}
+
+export interface OrdersUserState{
+    ordersUser: Array<IOrderItem>,
+    loading: boolean
+}
+
+export interface  IPostOrderForDriver{
+    email: string,
     recaptchaToken: string
 }
 export interface ICustomerItem{

@@ -24,6 +24,7 @@ const CurrentOrderView: React.FC = () =>{
     const {list} = useTypedSelector(store=>store.customers)
     const navigator = useNavigate()
     const [showDate,setShowDate] = React.useState<boolean>(false)
+
     let f: IOrderCurrent = null;
 
     React.useEffect(()=>{
@@ -135,7 +136,7 @@ const CurrentOrderView: React.FC = () =>{
                 <div className="modal-dialog modal-lg">
                   <div className="modal-content">
                     <div className="modal-header">
-                      <h5 className="modal-title">Введіть дату та час загрузки</h5>
+                      <h5 className="modal-title">Введіть дату та час завантаження</h5>
                       <button
                         type="button"
                         className="btn-close"
