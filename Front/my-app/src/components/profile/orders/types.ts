@@ -32,3 +32,25 @@ export interface ICustomerItem{
     email: string,
     phone: string
 }
+export interface IOrderItemForCustomer{
+    id: number,
+    name: string,
+    fromRegion: string,
+    fromCity: string,
+    fromAddress: string,
+    toRegion: string,
+    toCity: string,
+    toAddress: string,
+    weight: string,
+    image: string,
+    price: number,
+    date: Date,
+    customerMark: number,
+    driverMark: number 
+    driverImage?: string,
+    lastName?: string,
+    firstName?: string,
+    middleName?: string,
+    email?: string,
+    phone?: string
+}

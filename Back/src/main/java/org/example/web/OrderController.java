@@ -5,25 +5,18 @@ import lombok.RequiredArgsConstructor;
 import org.example.configuration.captcha.CaptchaSettings;
 import org.example.configuration.captcha.GoogleResponse;
 import org.example.dto.OrderDto.*;
-import org.example.dto.UserDto.UserCreateDTO;
-import org.example.dto.UserDto.UserItemDTO;
 import org.example.entity.OrderEntity;
-import org.example.entity.RoleEntity;
 import org.example.entity.UserEntity;
 import org.example.mapper.ApplicationMapper;
 import org.example.repositories.OrderRepository;
-import org.example.repositories.RoleRepository;
 import org.example.repositories.UserRepository;
 import org.example.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestOperations;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.example.web.AccountController.RECAPTCHA_URL_TEMPLATE;
@@ -74,7 +67,13 @@ public class OrderController {
             catch (Exception rce) {
                 String str = rce.getMessage();
             }
-            UserEntity user = userRepository.findByEmail(order.getEmailCustomer());
+            UserEntity user = new UserEntity();
+            List<UserEntity> list = userRepository.findAll();
+            for(UserEntity item: list)
+            {
+                if(item.getEmail().equals(order.getEmailCustomer()))
+                    user = item;
+            }
             String fileName = storageService.store(order.getImage());
             OrderEntity orderEntity = new OrderEntity(order.getFromRegion(),order.getName(),
                         order.getFromCity(),order.getFromAddress(),order.getToRegion(),
@@ -100,7 +99,13 @@ public class OrderController {
             catch (Exception rce) {
                 String str = rce.getMessage();
             }
-            UserEntity user = userRepository.findByEmail(order.getEmailDriver());
+            UserEntity user = new UserEntity();
+            List<UserEntity> list = new ArrayList<UserEntity>();
+            for(UserEntity item: list)
+            {
+                if(item.getEmail().equals(order.getEmailDriver()))
+                    user = item;
+            }
             List<OrderEntity> orders = user.getOrdersDrivers();
             if(orders.size()>0)
             {
@@ -139,7 +144,13 @@ public class OrderController {
             catch (Exception rce) {
                 String str = rce.getMessage();
             }
-            UserEntity driver = userRepository.findByEmail(order.getEmail());
+            UserEntity driver = new UserEntity();
+            List<UserEntity> list = new ArrayList<UserEntity>();
+            for(UserEntity item: list)
+            {
+                if(item.getEmail().equals(order.getEmail()))
+                    driver = item;
+            }
             OrderEntity orderEntity = orderRepository.findById(order.getId());
             orderEntity.setDownloadDate(order.getDate());
             List<OrderEntity> orders = new ArrayList<>();
@@ -166,7 +177,13 @@ public class OrderController {
             catch (Exception rce) {
                 String str = rce.getMessage();
             }
-            UserEntity driver = userRepository.findByEmail(order.getEmail());
+            UserEntity driver = new UserEntity();
+            List<UserEntity> list = new ArrayList<UserEntity>();
+            for(UserEntity item: list)
+            {
+                if(item.getEmail().equals(order.getEmail()))
+                    driver = item;
+            }
             OrderEntity orderEntity = orderRepository.findById(order.getId());
             ArrayList<Integer> rait = driver.getRaiting();
             rait.add(order.getMark());
@@ -187,7 +204,7 @@ public class OrderController {
         }
     }
     @PostMapping("/getOrderDriver")
-    public DriverGetOrderDTO GetOrderForDriver(@RequestBody OrderGetDriverDTO driver)
+    public DriverGetOrderDTO GetOrderForDriver(@RequestBody OrderGetUserDTO driver)
     {
         try {
             String url = String.format(RECAPTCHA_URL_TEMPLATE, captchaSettings.getSecretkey(), driver.getRecaptchaToken());
@@ -200,7 +217,13 @@ public class OrderController {
             catch (Exception rce) {
                 String str = rce.getMessage();
             }
-            UserEntity driverEntity = userRepository.findByEmail(driver.getEmail());
+            UserEntity driverEntity = new UserEntity();
+            List<UserEntity> listUser = userRepository.findAll();
+            for(UserEntity item: listUser)
+            {
+                if(item.getEmail().equals(driver.getEmail()))
+                    driverEntity = item;
+            }
             OrderEntity orderEntity = new OrderEntity();
             for(OrderEntity item: driverEntity.getOrdersDrivers())
             {
@@ -209,10 +232,10 @@ public class OrderController {
                     orderEntity = item;
                 }
             }
-            if(orderEntity != null)
+            if(orderEntity.getId() != 0)
             {
                 DriverGetOrderDTO driverGetOrderDTO = new DriverGetOrderDTO(orderEntity.getId(), orderEntity.getName(),
-                        orderEntity.getFromRegion(),orderEntity.getFromRegion(),orderEntity.getFromAddress(),
+                        orderEntity.getFromRegion(),orderEntity.getFromCity(),orderEntity.getFromAddress(),
                         orderEntity.getToRegion(),orderEntity.getToCity(),orderEntity.getToAddress(),
                         orderEntity.getWeight(), orderEntity.getImage(), orderEntity.getPrice(),orderEntity.getDownloadDate(),
                         orderEntity.getCustomerMark(),orderEntity.getDriverMark());
@@ -242,4 +265,128 @@ public class OrderController {
             return null;
         }
     }
+    @PostMapping("/getOrderCustomer")
+    public List<CustomerGetOrderDTO> GetOrderForCustomer(@RequestBody OrderGetUserDTO customer)
+    {
+        try {
+            String url = String.format(RECAPTCHA_URL_TEMPLATE, captchaSettings.getSecretkey(), customer.getRecaptchaToken());
+            try {
+                final GoogleResponse googleResponse = restTemplate.getForObject(url, GoogleResponse.class);
+                if (!googleResponse.isSuccess()) {
+                    throw new Exception("reCaptcha was not successfully validated");
+                }
+            }
+            catch (Exception rce) {
+                String str = rce.getMessage();
+            }
+            UserEntity customerEntity = userRepository.findByEmail(customer.getEmail());
+
+            OrderEntity orderEntity = new OrderEntity();
+            List<CustomerGetOrderDTO> orders = new ArrayList<CustomerGetOrderDTO>();
+            List<OrderEntity> ordersEntity = customerEntity.getOrdersCustomers();
+            for(OrderEntity item: ordersEntity)
+            {
+                if(item.getCustomerMark() == 0)
+                {
+                    orderEntity = item;
+                    if(orderEntity.getDriver() != null)
+                    {
+                        UserEntity driver = userRepository.findByEmail(orderEntity.getDriver().getEmail());
+                        CustomerGetOrderDTO orderDTO = new CustomerGetOrderDTO(
+                                orderEntity.getId(),orderEntity.getName(),orderEntity.getFromRegion(),
+                                orderEntity.getFromCity(),orderEntity.getFromAddress(),
+                                orderEntity.getToRegion(),orderEntity.getToCity(),orderEntity.getToAddress(),
+                                orderEntity.getWeight(),orderEntity.getImage(),orderEntity.getPrice(),
+                                orderEntity.getDownloadDate(),orderEntity.getCustomerMark(),orderEntity.getDriverMark(),
+                                driver.getImage(), driver.getLastName(), driver.getFirstName(), driver.getMiddleName(),
+                                driver.getEmail(), driver.getPhone());
+                        orders.add(orderDTO);
+                    }
+                    else
+                    {
+                        CustomerGetOrderDTO orderDTO = new CustomerGetOrderDTO(
+                                orderEntity.getId(),orderEntity.getName(),orderEntity.getFromRegion(),
+                                orderEntity.getFromCity(),orderEntity.getFromAddress(),
+                                orderEntity.getToRegion(),orderEntity.getToCity(),orderEntity.getToAddress(),
+                                orderEntity.getWeight(),orderEntity.getImage(),orderEntity.getPrice(),
+                                orderEntity.getDownloadDate(),orderEntity.getCustomerMark(),orderEntity.getDriverMark(),
+                                "", "", "", "",
+                                "", "");
+                        orders.add(orderDTO);
+                    }
+                }
+            }
+            return orders;
+
+
+        }catch(BadCredentialsException ex) {
+
+            return null;
+        }
+    }
+    @PostMapping("/getOrdersForCustomers")
+    public List<DriverGetOrderDTO> GetOrdersFoCustomer(@RequestBody OrderGetUserDTO customer)
+    {
+        try {
+            String url = String.format(RECAPTCHA_URL_TEMPLATE, captchaSettings.getSecretkey(), customer.getRecaptchaToken());
+            try {
+                final GoogleResponse googleResponse = restTemplate.getForObject(url, GoogleResponse.class);
+                if (!googleResponse.isSuccess()) {
+                    throw new Exception("reCaptcha was not successfully validated");
+                }
+            }
+            catch (Exception rce) {
+                String str = rce.getMessage();
+            }
+            UserEntity customerEntity = userRepository.findByEmail(customer.getEmail());
+            OrderEntity orderEntity = new OrderEntity();
+            List<DriverGetOrderDTO> orders = new ArrayList<DriverGetOrderDTO>();
+            for(OrderEntity item: customerEntity.getOrdersCustomers())
+            {
+                if(item.getDriverMark() == 0)
+                {
+                    orderEntity = item;
+                    DriverGetOrderDTO driverGetOrderDTO = new DriverGetOrderDTO(orderEntity.getId(), orderEntity.getName(),
+                            orderEntity.getFromRegion(),orderEntity.getFromCity(),orderEntity.getFromAddress(),
+                            orderEntity.getToRegion(),orderEntity.getToCity(),orderEntity.getToAddress(),
+                            orderEntity.getWeight(), orderEntity.getImage(), orderEntity.getPrice(),orderEntity.getDownloadDate(),
+                            orderEntity.getCustomerMark(),orderEntity.getDriverMark());
+                    orders.add(driverGetOrderDTO);
+                }
+            }
+            return  orders;
+
+        }catch(BadCredentialsException ex) {
+
+            return null;
+        }
+    }
+    @PostMapping("/deleteOrder")
+    public String deleteOrder(@RequestBody OrderDeleteDTO order)
+    {
+        try {
+            String url = String.format(RECAPTCHA_URL_TEMPLATE, captchaSettings.getSecretkey(), order.getRecaptchaToken());
+            try {
+                final GoogleResponse googleResponse = restTemplate.getForObject(url, GoogleResponse.class);
+                if (!googleResponse.isSuccess()) {
+                    throw new Exception("reCaptcha was not successfully validated");
+                }
+            }
+            catch (Exception rce) {
+                String str = rce.getMessage();
+            }
+            OrderEntity orderEntity = orderRepository.findById(order.getId());
+            storageService.removeFile(orderEntity.getImage());
+            UserEntity user = userRepository.findByEmail(orderEntity.getCustomer().getEmail());
+            user.getOrdersCustomers().remove(orderEntity);
+            userRepository.save(user);
+            orderRepository.delete(orderEntity);
+            return "ok";
+
+        }catch(BadCredentialsException ex) {
+
+            return "no";
+        }
+    }
+
 }

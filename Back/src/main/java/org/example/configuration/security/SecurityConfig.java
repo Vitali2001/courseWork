@@ -98,6 +98,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/orders/successDriver").hasAuthority(Roles.Driver)
                 .antMatchers("/api/orders/getOrderDriver").hasAuthority(Roles.Driver)
                 .antMatchers("/api/orders/getCustomer").hasAuthority(Roles.Driver)
+                .antMatchers("/api/orders/getOrderCustomer").hasAuthority(Roles.Customer)
+                .antMatchers("/api/orders/getOrdersForCustomers").hasAuthority(Roles.Customer)
+                .antMatchers("/api/orders/deleteOrder").hasAuthority(Roles.Customer)
 
                 .antMatchers("/files/**").permitAll()
                 .antMatchers("/static/**").permitAll() //.hasAuthority(Roles.Admin)

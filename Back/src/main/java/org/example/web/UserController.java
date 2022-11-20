@@ -40,20 +40,20 @@ public class UserController {
     @GetMapping("/drivers")
     public List<UserGetDTO> getDrivers()
     {
-            List<UserGetDTO> drivers = new ArrayList<UserGetDTO>();
-            RoleEntity role = roleRepository.findByName("driver");
-            List<UserItemDTO> users = mapper.userToUserItemDto_List(userRepository.findAll());
-            for(UserItemDTO item : users)
+        List<UserGetDTO> drivers = new ArrayList<UserGetDTO>();
+        RoleEntity role = roleRepository.findByName("driver");
+        List<UserItemDTO> users = mapper.userToUserItemDto_List(userRepository.findAll());
+        for(UserItemDTO item : users)
+        {
+            if(item.getRole().toString().equals(role.toString()))
             {
-                if(item.getRole().toString().equals(role.toString()))
-                {
-                    UserGetDTO user = new UserGetDTO(item.getEmail(), item.getPhone(), item.getLastName(),
-                            item.getFirstName(),item.getMiddleName(),item.getAddress(),
-                            item.getRole().toString(), item.getImage());
-                    drivers.add(user);
-                }
+                UserGetDTO user = new UserGetDTO(item.getEmail(), item.getPhone(), item.getLastName(),
+                        item.getFirstName(),item.getMiddleName(),item.getAddress(),
+                        item.getRole().toString(), item.getImage());
+                drivers.add(user);
             }
-            return drivers;
+        }
+        return drivers;
     }
     @GetMapping("/customers")
     public List<UserGetDTO> getCustomers()

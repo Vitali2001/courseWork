@@ -39,4 +39,8 @@ public class UserEntity {
     private List<OrderEntity> ordersCustomers;
     @OneToMany(mappedBy = "driver")
     private List<OrderEntity> ordersDrivers;
+    @Override
+    public String toString(){
+        return this.email;
+    }
 }

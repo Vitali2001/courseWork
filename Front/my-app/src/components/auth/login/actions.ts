@@ -40,6 +40,7 @@ const setAuthToken = (token: string) => {
     else {
         delete http_common.defaults.headers.common["Authorization"];
     }
+    
 }
 
 export const setAuthUserByToken = (
@@ -53,4 +54,5 @@ export const setAuthUserByToken = (
         type: AuthActionTypes.LOGIN_AUTH_SUCCESS,
         payload: dataUser,
     });
+   
 };
