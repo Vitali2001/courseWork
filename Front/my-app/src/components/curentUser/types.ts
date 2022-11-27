@@ -6,7 +6,8 @@ export interface ICurrentUser{
     address: string,
     middleName: string,
     image: string,
-    role: string
+    role: string,
+    raiting: number
 }
 
 export interface CurrentUserState{

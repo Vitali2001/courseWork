@@ -5,10 +5,13 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.example.configuration.captcha.CaptchaSettings;
 import org.example.configuration.captcha.GoogleResponse;
+import org.example.constants.Roles;
 import org.example.dto.UserDto.*;
+import org.example.entity.OrderEntity;
 import org.example.entity.RoleEntity;
 import org.example.entity.UserEntity;
 import org.example.mapper.ApplicationMapper;
+import org.example.repositories.OrderRepository;
 import org.example.repositories.RoleRepository;
 import org.example.repositories.UserRepository;
 import org.example.storage.StorageService;
@@ -30,6 +33,8 @@ import static org.example.web.AccountController.RECAPTCHA_URL_TEMPLATE;
 @Api(tags = "Користувачі")
 public class UserController {
     private final UserRepository userRepository;
+    @Autowired
+    private OrderRepository orderRepository;
     private final RoleRepository roleRepository;
     private final ApplicationMapper mapper;
     private final CaptchaSettings captchaSettings;
@@ -47,9 +52,18 @@ public class UserController {
         {
             if(item.getRole().toString().equals(role.toString()))
             {
+                int raiting = 0;
+                UserEntity entity = userRepository.findByEmail(item.getEmail());
+                List<Integer> marks = entity.getRaiting();
+                if(marks != null)
+                {
+                    for(Integer m: marks)
+                        raiting += m;
+                    raiting = raiting / marks.size();
+                }
                 UserGetDTO user = new UserGetDTO(item.getEmail(), item.getPhone(), item.getLastName(),
                         item.getFirstName(),item.getMiddleName(),item.getAddress(),
-                        item.getRole().toString(), item.getImage());
+                        item.getRole().toString(), item.getImage(),raiting);
                 drivers.add(user);
             }
         }
@@ -65,9 +79,18 @@ public class UserController {
         {
             if(item.getRole().toString().equals(role.toString()))
             {
+                int raiting = 0;
+                UserEntity entity = userRepository.findByEmail(item.getEmail());
+                List<Integer> marks = entity.getRaiting();
+                if(marks != null)
+                {
+                    for(Integer m: marks)
+                        raiting += m;
+                    raiting = raiting / marks.size();
+                }
                 UserGetDTO user = new UserGetDTO(item.getEmail(), item.getPhone(), item.getLastName(),
                         item.getFirstName(),item.getMiddleName(),item.getAddress(),
-                        item.getRole().toString(), item.getImage());
+                        item.getRole().toString(), item.getImage(),raiting);
                 customers.add(user);
             }
         }
@@ -185,15 +208,55 @@ public class UserController {
                 String str = rce.getMessage();
             }
             UserEntity user = userRepository.findByEmail(userDel.getEmail());
-            try{
-                storageService.removeFile(user.getImage());
-                userRepository.deleteById(user.getId());
-                return "Користувача було видалено!";
-            }
-            catch (Exception ex)
+            RoleEntity role = new RoleEntity();
+            role.setName(Roles.Driver);
+            if(user.getRole().getName().equals(role.getName()))
             {
-                return "404";
+                try{
+                    storageService.removeFile(user.getImage());
+                    List<OrderEntity> orders = user.getOrdersDrivers();
+                    if(orders != null)
+                    {
+                        for(OrderEntity item: orders)
+                        {
+                            item.setDriver(null);
+                            orderRepository.save(item);
+                        }
+                    }
+                    storageService.removeFile(user.getImage());
+                    userRepository.delete(user);
+                    return "Користувача було видалено!";
+                }
+                catch (Exception ex)
+                {
+                    return "404";
+                }
             }
+            role.setName(Roles.Customer);
+            if(user.getRole().getName().equals(role.getName()))
+            {
+                try{
+                    storageService.removeFile(user.getImage());
+                    List<OrderEntity> orders = user.getOrdersCustomers();
+                    if(orders != null)
+                    {
+                        for(OrderEntity item: orders)
+                        {
+                            storageService.removeFile(item.getImage());
+                            orderRepository.delete(item);
+                        }
+                    }
+                    storageService.removeFile(user.getImage());
+                    userRepository.delete(user);
+                    return "Користувача було видалено!";
+                }
+                catch (Exception ex)
+                {
+                    return "404";
+                }
+            }
+            else
+                return "404";
 
         }catch(BadCredentialsException ex) {
             return "404";

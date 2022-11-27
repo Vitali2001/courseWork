@@ -12,6 +12,7 @@ import org.example.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 import static java.lang.String.format;
 
@@ -23,9 +24,17 @@ public class JwtTokenUtil {
 
     public String generateAccessToken(UserEntity user) {
         String role = user.getRole().getName();
+        List<Integer> marks = user.getRaiting();
+        int raiting = 0;
+        if(marks != null)
+        {
+            for(Integer item: marks)
+                raiting+= item;
+            raiting = raiting / marks.size();
+        }
         return Jwts.builder()
-                .setSubject(format("%s,%s,%s,%s,%s,%s,%s,%s,%s", user.getId(), user.getEmail(),user.getLastName(),
-                        user.getFirstName(),user.getMiddleName(),user.getImage(),user.getAddress(),user.getPhone(),role))
+                .setSubject(format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", user.getId(), user.getEmail(),user.getLastName(),
+                        user.getFirstName(),user.getMiddleName(),user.getImage(),user.getAddress(),user.getPhone(),role,raiting))
                 .claim("id",user.getId())
                 .claim("email", user.getEmail())
                 .claim("lastName", user.getLastName())
@@ -35,6 +44,7 @@ public class JwtTokenUtil {
                 .claim("address",user.getAddress())
                 .claim("phone",user.getPhone())
                 .claim("role", role)
+                .claim("raiting",raiting)
                 .setIssuer(jwtIssuer)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000)) // 1 week

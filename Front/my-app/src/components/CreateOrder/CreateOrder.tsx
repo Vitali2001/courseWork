@@ -137,7 +137,7 @@ export const CreateOrderLayout: React.FC = () => {
                             />
                             <InputComponent
                             inputName="weight"
-                            title="Вага/об`єм"
+                            title="Вага/об`єм (т/м3)"
                             touched={touched.weight}
                             errors={errors.weight}
                             handleChange={handleChange}

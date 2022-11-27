@@ -18,6 +18,7 @@ import EclipseWidgetContainer from "../Eclipse/index.tsx";
 const CurrentUserView: React.FC = () =>{
 
     const [isLoad, setLoad] = React.useState<boolean>(false);
+    const {isAuth} = useTypedSelector(store=>store.auth) 
     const dispatch = useDispatch();
     const {executeRecaptcha } = useGoogleReCaptcha();
     const {currentUser} = useTypedSelector(store=>store.currentUser)
@@ -31,6 +32,14 @@ const CurrentUserView: React.FC = () =>{
         if(!selected)
         window.history.back();
     })
+    function OnLoginClick()
+       {
+        navigator("/login")
+       }
+       function OnRegisterClick()
+       {
+          navigator("/register")
+       }
     function OnDeleteClick(){
          setShowDel(p=>!p)
     }
@@ -147,24 +156,39 @@ const CurrentUserView: React.FC = () =>{
     return(
         <div>
             {
-                selected
+                selected && isAuth
                 ?
                 (
                     <div className="row">
                         <HomeLayout/>
-                    <div style={{textAlign:"center"}}>
-                    {currentUser.role==="driver"?
-                        <h1>Водій</h1>
-                        :
-                        <h1>Замовник</h1> 
-                    }
-                    <img src={url+"api/account/files/1200_"+currentUser.image} alt="" />
-                    <h1>{currentUser.lastName}</h1>
-                    <h2>{currentUser.firstName}</h2>
-                    <h2>{currentUser.middleName}</h2>
-                    <h3>{currentUser.email}</h3>
-                    <h3>{currentUser.address}</h3>
-                    <h3>{currentUser.phone}</h3>
+                    <div style={{textAlign:"center",marginTop:"50px"}}>
+                    <div className="card mb-3" style={{maxWidth:"1300px",textAlign:"center"}}>
+                <div className="row g-0">
+                    <div className="col-md-4">
+                    <img src={url+"api/account/files/600_"+currentUser.image} style={{height:"400px"}} className="img-fluid rounded-start" alt="..." />
+                    </div>
+                    <div className="col-md-8">
+                    <div className="card-body">
+                        <h5 className="card-title">{currentUser.role==="admin"?
+                <h1>Адмін</h1>
+                :
+                currentUser.role==="driver"?
+                <h1>Водій</h1>
+                :
+                <h1>Замовник</h1>
+
+            }</h5>
+                        <h3 className="card-text">{currentUser.lastName}</h3>
+                        <h3 className="card-text">{currentUser.firstName}</h3>
+                        <h3 className="card-text">{currentUser.middleName}</h3>
+                        <h3 className="card-text">{currentUser.email}</h3>
+                        <h3 className="card-text">{currentUser.address}</h3>
+                        <h3 className="card-text">{currentUser.phone}</h3>
+                        <p className="card-text">{currentUser.raiting} &#11088;</p>
+                    </div>
+                    </div>
+                </div>
+                </div>
                     </div>
                     {
                         user !== undefined && user.role === "admin"
@@ -194,10 +218,14 @@ const CurrentUserView: React.FC = () =>{
                     
                 )
                 :
-                <div className="row">
-                <HomeLayout/>
-                <h1>Сталася помилка</h1>
-                </div>
+                <div style={{textAlign:"center"}}>
+                    <HomeLayout/>
+              <h1>Вам необхідно авторизуватися!</h1>
+              <br/>
+              <button type="button" className="btn btn-success" onClick={OnLoginClick}>Вхід</button>
+              &nbsp;&nbsp;&nbsp;
+              <button type="button" className="btn btn-success" onClick={OnRegisterClick}>Реєстрація</button>
+      </div>
             }
         </div>
     )

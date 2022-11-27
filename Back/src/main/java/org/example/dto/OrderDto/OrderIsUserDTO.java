@@ -6,5 +6,4 @@ import lombok.Data;
 public class OrderIsUserDTO {
     private int id;
     private String emailDriver;
-    private String recaptchaToken;
 }

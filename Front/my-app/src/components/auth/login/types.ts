@@ -32,6 +32,7 @@ export interface IUser {
     address: string,
     phone: string,
     role: string,
+    raiting: number,
     exp: Date | null
 }
 

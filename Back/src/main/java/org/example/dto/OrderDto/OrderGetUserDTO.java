@@ -5,5 +5,4 @@ import lombok.Data;
 @Data
 public class OrderGetUserDTO {
     private String email;
-    private String recaptchaToken;
 }

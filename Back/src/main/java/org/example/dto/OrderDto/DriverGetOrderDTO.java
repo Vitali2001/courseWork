@@ -20,12 +20,21 @@ public class DriverGetOrderDTO {
     private Date date;
     private int customerMark;
     private int driverMark;
+    private String userImage;
+    private String lastName;
+    private String firstName;
+    private String middleName;
+    private String email;
+    private String phone;
+    private String address;
+    private String role;
 
     public DriverGetOrderDTO()
     {
 
     }
-    public DriverGetOrderDTO(Integer id, String name, String fromRegion, String fromCity, String fromAddress, String toRegion, String toCity, String toAddress, String weight, String image, Double price,Date date,int customerMark,int driverMark) {
+
+    public DriverGetOrderDTO(Integer id, String name, String fromRegion, String fromCity, String fromAddress, String toRegion, String toCity, String toAddress, String weight, String image, Double price, Date date, int driverMark, int customerMark1, String userImage, String lastName, String firstName, String middleName, String email, String phone, String address, String role) {
         this.id = id;
         this.name = name;
         this.fromRegion = fromRegion;
@@ -38,9 +47,15 @@ public class DriverGetOrderDTO {
         this.image = image;
         this.price = price;
         this.date = date;
-        this.customerMark = customerMark;
         this.driverMark = driverMark;
+        this.customerMark = customerMark1;
+        this.userImage = userImage;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.role = role;
     }
-
-
 }

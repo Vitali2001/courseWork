@@ -7,8 +7,9 @@ import toastr from 'toastr';
 import "toastr/build/toastr.css"
 import http from "../../../http.common";
 import EclipseWidgetContainer from "../../Eclipse/index.tsx"
+import "./style.css"
 import { useDispatch } from "react-redux";
-import { IOrderItem,IPostOrderForDriver,ICustomerItem,IOrderItemForCustomer} from "./types.ts";
+import { IPostOrderForDriver,IOrderItemForCustomer,IDriverSetMark,ICustomerSetMark,IOrderItemForDriver} from "./types.ts";
 import { useNavigate } from 'react-router-dom';
 import classNames from "classnames";
 
@@ -22,40 +23,13 @@ const OrdersView: React.FC = () =>{
     const url = http.defaults.baseURL
     const {isAuth,user} = useTypedSelector(store=>store.auth)
     const {loading} = useTypedSelector(store=>store.ordersUser); 
-    const [date, setDate] = React.useState("")
-    const [time, setTime] = React.useState("")
     const [showDelete,setShowDelete] = React.useState<boolean>(false)
+    const [showMarks,setShowMarks] = React.useState<boolean>(false);
     const [id, setId] = React.useState(0)
-    const [customer,setCustomer] = React.useState<ICustomerItem>(
-        {
-            image:"",
-            lastName: "",
-            firstName: "",
-            middleName: "",
-            email: "",
-            phone: ""
-        }
-    );
-    const [order,setOrder] = React.useState<IOrderItem>(
-        {
-            id: 0,
-            name: "",
-            fromRegion: "",
-            fromCity: "",
-            fromAddress:"",
-            toRegion: "",
-            toCity: "",
-            toAddress: "",
-            weight: "",
-            image: "",
-            price: "",
-            date: new Date(),
-            customerMark: 0,
-            driverMark: 0 
-        }
-    )
+    const [mark,setMark] = React.useState(0)
   
     const [ordersCustomer,setOrdersCustomer] = React.useState<IOrderItemForCustomer>([])
+    const [ordersDriver,setOrdersDriver] = React.useState<IOrderItemForDriver>([])
     const dispatch = useDispatch();
     React.useEffect(() => {
         
@@ -72,13 +46,21 @@ const OrdersView: React.FC = () =>{
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
         },[dispatch]);
-    let orderItem: IOrderItem = null
-    let customerItem: ICustomerItem = null;
     function OnCustomerClick(item: any)
     {
+        let pay: any = {
+            lastName: item.lastName,
+            firstName: item.firstName,
+            middleName: item.middleName,
+            email: item.email,
+            phone: item.phone,
+            role: "customer",
+            image: item.userImage,
+            address: item.address
+        }
         dispatch({
             type: "SET_CURRENT_USER",
-            payload: item
+            payload: pay
           })
           navigator("/current_user")
     }
@@ -94,9 +76,9 @@ const OrdersView: React.FC = () =>{
         try{
             const resp = await http.post("api/orders/deleteOrder",values)
             if(resp.data === "ok")
-            toastr.success("Ви видалили замовлення!Додайте нове!","Успіх!")
+            toastr.success("Ви видалили замовлення!","Успіх!")
             setShowDelete(false)
-            navigator("/orders")
+            GetOrdersCustomer();
         }
         catch(ex)
         {
@@ -105,9 +87,13 @@ const OrdersView: React.FC = () =>{
             setShowDelete(false)
         }
     }
+    function CallSetMark(item:number)
+    {
+        setId(item)
+        setShowMarks(true);
+    }
     function CallModal(item:number){
         
-        console.log("ok")
         setId(item)
         setShowDelete(true)
 
@@ -121,7 +107,8 @@ const OrdersView: React.FC = () =>{
             email: item.email,
             phone: item.phone,
             role: "driver",
-            image: item.driverImage
+            image: item.driverImage,
+            address: item.address
         }
         dispatch({
             type: "SET_CURRENT_USER",
@@ -129,46 +116,27 @@ const OrdersView: React.FC = () =>{
           })
           navigator("/current_user")
     }
+    let OrdersDriver: IOrderItemForDriver = [];
     async function GetOrders()
     {
-       if(executeRecaptcha === undefined)
-       navigator("/profile")
-        if(!executeRecaptcha)
-            return
-            const reCaptchaToken = await executeRecaptcha()
-            const values: IPostOrderForDriver = {
-                email: user.email,
-                recaptchaToken: reCaptchaToken
-            }
-            const resp = await http.post("api/orders/getOrderDriver",values)
-            const result = resp.data;
-            dispatch({
-                type: "GET_LIST_ORDERS_SUCCESS",
-                payload: result,
-            });
-            orderItem = resp.data
-            const res = await http.post("api/orders/getCustomer",orderItem.id)
-            customerItem = res.data
-            let d = new Date(orderItem.date);
-            let t = new Date(orderItem.date)
-            let m = d.getMonth();
-            m++;
-            setDate(`${d.getDate()}.${m}.${d.getFullYear()}`)
-            setTime(`${t.getHours()}:${t.getMinutes()}`)
-            setCustomer(customerItem);
-            setOrder(orderItem);
+        const values: IPostOrderForDriver = {
+            email: user.email,
+        }
+        const resp = await http.post("api/orders/getOrderDriver",values)
+        OrdersDriver = resp.data;
+        setOrdersDriver(OrdersDriver)
+        const result = await http.post("api/orders/getOrdersForDrivers",values)
+        dispatch({
+            type: "GET_LIST_ORDERS_SUCCESS",
+            payload: result.data,
+        });
+        console.log(resp.data)
     }
     let OrdersCustomer: IOrderItemForCustomer = [];
     async function GetOrdersCustomer()
     {
-        if(executeRecaptcha === undefined)
-       navigator("/profile")
-        if(!executeRecaptcha)
-            return
-            const reCaptchaToken = await executeRecaptcha()
             const values: IPostOrderForDriver = {
                 email: user.email,
-                recaptchaToken: reCaptchaToken
             }
             const resp = await http.post("api/orders/getOrderCustomer",values)
             OrdersCustomer = resp.data;
@@ -195,6 +163,65 @@ const OrdersView: React.FC = () =>{
         let t = item.getHours();
         let m = item.getMinutes();
         return(<div>{`${t}:${m}`}</div>)
+    }
+    async function OnSetMark()
+    {
+       if(user.role==="driver")
+        {
+            if(!executeRecaptcha)
+            return
+            if(mark === 0)
+             setMark(5)
+            const reCaptchaToken = await executeRecaptcha()
+            const values: IDriverSetMark = {
+            mark: mark,
+            recaptchaToken: reCaptchaToken,
+            email: user.email,
+            id: id
+        }
+        try{
+            const resp = await http.post("api/orders/setMarkDriver",values)
+            if(resp.data === "ok")
+            toastr.success("Ви Поставили оцінку замовнику!","Успіх!")
+            setShowMarks(false)
+            GetOrders();
+        }
+        catch(ex)
+        {
+            console.log(ex)
+            toastr.error("Помилка сервера!","Помилка!")
+            setShowMarks(false)
+        }
+        }
+        if(user.role === "customer")
+        {
+            if(!executeRecaptcha)
+            return
+            if(mark === 0)
+             setMark(5)
+            const reCaptchaToken = await executeRecaptcha()
+            const values: ICustomerSetMark = {
+            mark: mark,
+            recaptchaToken: reCaptchaToken,
+            email: user.email,
+            id: id
+        }
+        try{
+            const resp = await http.post("api/orders/setMarkCustomer",values)
+            console.log(resp)
+            if(resp.data === "ok")
+            toastr.success("Ви Поставили оцінку водію!","Успіх!")
+            setShowMarks(false)
+            GetOrdersCustomer();
+        }
+        catch(ex)
+        {
+            console.log("ex")
+            console.log(ex)
+            toastr.error("Помилка сервера!","Помилка!")
+            setShowMarks(false)
+        }
+        }
     }
     function CareerModal({showDelete, setShowDelete,id}) {  
         
@@ -241,14 +268,125 @@ const OrdersView: React.FC = () =>{
             </>
           );
       }
-    const viewOrdersSuccess = ordersCustomer.map((item: IOrderItemForCustomer) => (
+    function CareerModalMarks({showMarks, setShowMarks,id}) {  
+        const [ch1,setCh1] = React.useState<boolean>(false);
+        const [ch2,setCh2] = React.useState<boolean>(false);
+        const [ch3,setCh3] = React.useState<boolean>(false);
+        const [ch4,setCh4] = React.useState<boolean>(false);
+        const [ch5,setCh5] = React.useState<boolean>(false);
+        function SetStar(id: number)
+    {
+        if(id===1)
+        {
+            setCh1(true)
+            setCh2(false)
+            setCh3(false) 
+            setCh4(false) 
+            setCh5(false) 
+        }
+        if(id===2)
+        {
+            setCh1(false)
+            setCh2(true)
+            setCh3(false) 
+            setCh4(false) 
+            setCh5(false) 
+        }
+        if(id===3)
+        {
+            setCh1(false)
+            setCh2(false)
+            setCh3(true) 
+            setCh4(false) 
+            setCh5(false) 
+        }
+        if(id===4)
+        {
+            setCh1(false)
+            setCh2(false)
+            setCh3(false) 
+            setCh4(true) 
+            setCh5(false) 
+        }  
+        if(id===5)
+        {
+            setCh1(false)
+            setCh2(false)
+            setCh3(false) 
+            setCh4(false) 
+            setCh5(true) 
+        }
+        setMark(id)
+    }
+        return (
+           
+            <>
+              <div className={classNames("modal",{"custom-modal": showMarks})}>
+                <div className="modal-dialog modal-lg">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                       {
+                      user.role === "driver"?
+                      <h5 className="modal-title">Поставте оцінку замовнику</h5> 
+                      :
+                      <h5 className="modal-title">Поставте оцінку водію</h5> 
+                      }
+                      <button
+                        type="button"
+                        className="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        onClick={()=>{setShowMarks(false)}}
+                      ></button>
+                    </div>
+                    <div className="modal-body">
+                    <div className="star-rating">
+            <div className="star-rating__wrap">
+                <input className="star-rating__input" checked={ch5} type="radio" name="rating" value="5"/>
+                <label className="star-rating__ico fa fa-star-o fa-lg" id="5" onClick={()=>{SetStar(5)}} title="5 out of 5 stars"/>
+                <input className="star-rating__input" checked={ch4} type="radio" name="rating" value="4"/>
+                <label className="star-rating__ico fa fa-star-o fa-lg" id="4" onClick={()=>{SetStar(4)}} title="4 out of 5 stars"/>
+                <input className="star-rating__input" checked={ch3} type="radio" name="rating" value="3"/>
+                <label className="star-rating__ico fa fa-star-o fa-lg" id="3" onClick={()=>{SetStar(3)}} title="3 out of 5 stars"/>
+                <input className="star-rating__input" checked={ch2} type="radio" name="rating" value="2"/>
+                <label className="star-rating__ico fa fa-star-o fa-lg" id="2" onClick={()=>{SetStar(2)}} title="2 out of 5 stars"/>
+                <input className="star-rating__input" checked={ch1} type="radio" name="rating" value="1"/>
+                <label className="star-rating__ico fa fa-star-o fa-lg" id="1" onClick={()=>{SetStar(1)}} title="1 out of 5 stars"/>
+            </div>          
+        </div>
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                        onClick={()=>{setShowMarks(false)}}
+                      >
+                        Скасувати
+                      </button>
+                      {
+                         loading?
+                         <EclipseWidgetContainer/>
+                         :
+                      <button type="button" className="btn btn-success" onClick={OnSetMark}>
+                        Завершити
+                      </button>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          );
+      }
+    const viewOrdersEndDriver = ordersDriver.map((item: IOrderItemForDriver) => (
         <div > 
              {
-                item.email !== ""
+                item.email !== "" && item.customerMark !== 0
                 ?
                 (
                     <div>
-                    <h3>Прийняті &#128994;</h3>
+                    <h3>Завершене &#128994;</h3>
                     <div className="card" key={item.id} style={{width: "18rem",margin:"10px"}}>
                     <img src={url+"api/account/files/600_"+item.image} className="card-img-top" alt="..."/>
                     <div className="card-body">
@@ -267,14 +405,178 @@ const OrdersView: React.FC = () =>{
                         <h3>Час завантаження: <GetTime date={item.date}/></h3>
                         
                         <hr/>
-                        <h3>Водій</h3>
-                        <img src={url+"api/account/files/600_"+item?.driverImage} style={{borderRadius:"100px", margin:"-5px"}}
+                        <p>
+                            <button className="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                Замовник
+                            </button>
+                            </p>
+                            <div className="collapse" id="collapseExample">
+                            <div className="card card-body">
+                            <img src={url+"api/account/files/600_"+item?.userImage} style={{borderRadius:"100px",marginLeft:"60px"}}
+                 width="100px" alt="" onClick={(e)=>{OnCustomerClick(item)}}/>
+                        <p className="card-text">{item.lastName}</p>
+                        <p className="card-text">{item.firstName}</p>
+                        <p className="card-text">{item.middleName}</p>
+                            </div>
+                            </div>
+                        <hr/>
+                        <button className="btn btn-success" onClick={()=>{CallSetMark(item.id)}}>Завершити</button>
+                    </div>
+                    </div>
+                  </div>
+                )
+                :
+                (
+                  <></>
+                )
+             }
+        </div>));
+    const viewOrdersDriver = ordersDriver.map((item: IOrderItemForDriver) => (
+        <div > 
+             {
+                item.email !== "" && item.customerMark === 0
+                ?
+                (
+                    <div style={{textAlign:"center"}}>
+                    <h3>Прийняте <small>&#128993;</small></h3>
+                    <div className="card" key={item.id} style={{width: "18rem",margin:"10px",marginLeft:"550px"}}>
+                    <img src={url+"api/account/files/600_"+item.image} className="card-img-top" alt="..."/>
+                    <div className="card-body">
+                        <h1 className="card-title" >{item.name}</h1>
+                        <hr/>
+                        <h3 className="card-text">Звідки</h3>
+                        <p className="card-text">{item.fromRegion}</p>
+                        <p className="card-text">{item.fromCity}</p>
+                        <p className="card-text">{item.fromAddress}</p>
+                        <h3 className="card-text">Куди</h3>
+                        <p className="card-text">{item.toRegion}</p>
+                        <p className="card-text">{item.toCity}</p>
+                        <p className="card-text">{item.toAddress}</p>
+                        <h3 className="card-text">{item.price} грн</h3>
+                        <h3>Дата завантаження: <GetDate date={item.date}/></h3>
+                        <h3>Час завантаження: <GetTime date={item.date}/></h3>
+                        
+                        <hr/>
+                        <p>
+                            <button className="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                Замовник
+                            </button>
+                            </p>
+                            <div className="collapse" id="collapseExample">
+                            <div className="card card-body">
+                            <img src={url+"api/account/files/600_"+item?.userImage} style={{borderRadius:"100px",marginLeft:"60px"}}
+                 width="100px" alt="" onClick={(e)=>{OnCustomerClick(item)}}/>
+                        <p className="card-text">{item.lastName}</p>
+                        <p className="card-text">{item.firstName}</p>
+                        <p className="card-text">{item.middleName}</p>
+                        </div>
+                        </div>
+                        <hr/>
+                        <button className="btn btn-success" onClick={()=>{CallSetMark(item.id)}}>Завершити</button>
+                    </div>
+                    </div>
+                  </div>
+                )
+                :
+                (
+                  <></>
+                )
+             }
+        </div>));
+    const viewOrdersEnd = ordersCustomer.map((item: IOrderItemForCustomer) => (
+        <div > 
+             {
+                item.email !== "" && item.driverMark !== 0
+                ?
+                (
+                    <div>
+                    <h3>Завершене &#128994;</h3>
+                    <div className="card" key={item.id} style={{width: "18rem",margin:"10px"}}>
+                    <img src={url+"api/account/files/600_"+item.image} className="card-img-top" alt="..."/>
+                    <div className="card-body">
+                        <h1 className="card-title" >{item.name}</h1>
+                        <hr/>
+                        <h3 className="card-text">Звідки</h3>
+                        <p className="card-text">{item.fromRegion}</p>
+                        <p className="card-text">{item.fromCity}</p>
+                        <p className="card-text">{item.fromAddress}</p>
+                        <h3 className="card-text">Куди</h3>
+                        <p className="card-text">{item.toRegion}</p>
+                        <p className="card-text">{item.toCity}</p>
+                        <p className="card-text">{item.toAddress}</p>
+                        <h3 className="card-text">{item.price} грн</h3>
+                        <h3>Дата завантаження: <GetDate date={item.date}/></h3>
+                        <h3>Час завантаження: <GetTime date={item.date}/></h3>
+                        
+                        <hr/>
+                        <p>
+                            <button className="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                Водій
+                            </button>
+                            </p>
+                            <div className="collapse" id="collapseExample">
+                            <div className="card card-body">
+                            <img src={url+"api/account/files/600_"+item?.driverImage} style={{borderRadius:"100px",marginLeft:"60px"}}
                  width="100px" alt="" onClick={(e)=>{OnDriverClick(item)}}/>
                         <p className="card-text">{item.lastName}</p>
                         <p className="card-text">{item.firstName}</p>
                         <p className="card-text">{item.middleName}</p>
+                            </div>
+                            </div>
                         <hr/>
-                        <button className="btn btn-danger">Видалити</button>
+                        <button className="btn btn-success" onClick={()=>{CallSetMark(item.id)}}>Завершити</button>
+                    </div>
+                    </div>
+                  </div>
+                )
+                :
+                (
+                  <></>
+                )
+             }
+        </div>));
+    const viewOrdersSuccess = ordersCustomer.map((item: IOrderItemForCustomer) => (
+        <div > 
+             {
+                item.email !== "" && item.driverMark === 0
+                ?
+                (
+                    <div>
+                    <h3>Прийняте <small>&#128993;</small></h3>
+                    <div className="card" key={item.id} style={{width: "18rem",margin:"10px"}}>
+                    <img src={url+"api/account/files/600_"+item.image} className="card-img-top" alt="..."/>
+                    <div className="card-body">
+                        <h1 className="card-title" >{item.name}</h1>
+                        <hr/>
+                        <h3 className="card-text">Звідки</h3>
+                        <p className="card-text">{item.fromRegion}</p>
+                        <p className="card-text">{item.fromCity}</p>
+                        <p className="card-text">{item.fromAddress}</p>
+                        <h3 className="card-text">Куди</h3>
+                        <p className="card-text">{item.toRegion}</p>
+                        <p className="card-text">{item.toCity}</p>
+                        <p className="card-text">{item.toAddress}</p>
+                        <h3 className="card-text">{item.price} грн</h3>
+                        <h3>Дата завантаження: <GetDate date={item.date}/></h3>
+                        <h3>Час завантаження: <GetTime date={item.date}/></h3>
+                        
+                        <hr/>
+                        <p>
+                            <button className="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                Водій
+                            </button>
+                            </p>
+                            <div className="collapse" id="collapseExample">
+                            <div className="card card-body">
+                            <img src={url+"api/account/files/600_"+item?.driverImage} style={{borderRadius:"100px",marginLeft:"60px"}}
+                 width="100px" alt="" onClick={(e)=>{OnDriverClick(item)}}/>
+                        <p className="card-text">{item.lastName}</p>
+                        <p className="card-text">{item.firstName}</p>
+                        <p className="card-text">{item.middleName}</p>
+                            </div>
+                            </div>
+                        <hr/>
+                        <button className="btn btn-success" onClick={()=>{CallSetMark(item.id)}}>Завершити</button>
                     </div>
                     </div>
                   </div>
@@ -292,7 +594,7 @@ const OrdersView: React.FC = () =>{
                 ?
                 (
                     <div>
-                        <h3>В очікуванні &#128993;</h3>
+                        <h3>В очікуванні &#128308;</h3>
                     <div className="card" key={item.id} style={{width: "18rem",margin:"10px"}}>
                     <img src={url+"api/account/files/600_"+item.image} className="card-img-top" alt="..."/>
                     <div className="card-body">
@@ -320,7 +622,7 @@ const OrdersView: React.FC = () =>{
              }
         </div>));
     return(
-        <div style={{display:"flex",flexDirection:"column"}}>
+        <div>
         <HomeLayout/>
         {
             isAuth?
@@ -334,36 +636,36 @@ const OrdersView: React.FC = () =>{
                     loading?<EclipseWidgetContainer/>:<></>
                 }
                 { user.role === "driver"?
+        (
+            <div>
+                    <CareerModal
+                    id = {id}
+                    showDelete = {showDelete}
+                    setShowDelete = {setShowDelete}
+                    />
+                    <CareerModalMarks
+                        showMarks={showMarks}
+                        id = {id}
+                        setShowMarks = {setShowMarks}
+                    />
+            {
+                ordersDriver.length < 1 ?
+                
+                    <div style={{textAlign:"center"}}><h1>Ви не маєте замовлень</h1></div>
+                    :
                     (
-            <div style={{textAlign:"center"}}>
-                <div className="card" style={{width: "18rem",marginLeft:"560px"}}>
-                    <img src={url+"api/account/files/600_"+order.image} className="card-img-top" alt="..."/>
-                    <div className="card-body">
-                        <h1 className="card-title">{order.name}</h1>
-                        <hr/>
-                        <h3 className="card-text">Звідки</h3>
-                        <p className="card-text">{order.fromRegion}</p>
-                        <p className="card-text">{order.fromCity}</p>
-                        <p className="card-text">{order.fromAddress}</p>
-                        <h3 className="card-text">Куди</h3>
-                        <p className="card-text">{order.toRegion}</p>
-                        <p className="card-text">{order.toCity}</p>
-                        <p className="card-text">{order.toAddress}</p>
-                        <h3 className="card-text">{order.price} грн</h3>
-                        <h3 className="card-text">Дата завантаження: {date}</h3>
-                        <h3 className="card-text">Час завантаження: {time}</h3>
-                        <hr/>
-                        <h3 className="card-text">Замовник</h3>
-                        <img src={url+"api/account/files/600_"+customer?.image} style={{borderRadius:"100px", margin:"-5px"}}
-                 width="100px" alt="" onClick={(e)=>{OnCustomerClick(customer)}}/>
-                        <p className="card-text">{customer.lastName}</p>
-                        <p className="card-text">{customer.firstName}</p>
-                        <p className="card-text">{customer.middleName}</p>
-                        <hr/>
-                        <button className="btn btn-success">Завершити</button>
-                    </div>
-                </div>
-            </div>
+                       <div>  <div>
+                       <hr/>{
+                    viewOrdersDriver
+                   }
+                   
+                   </div>
+                
+                   <div style={{textAlign:"center",display:"flex",flexDirection:"row"}}><hr/>{viewOrdersEndDriver}</div></div>
+                    )
+                
+            }
+        </div>
         )
         : 
         <div>
@@ -372,12 +674,20 @@ const OrdersView: React.FC = () =>{
                     showDelete = {showDelete}
                     setShowDelete = {setShowDelete}
                     />
-            <div style={{textAlign:"center",display:"flex",flexDirection:"row"}}>{
+                    <CareerModalMarks
+                        showMarks={showMarks}
+                        id = {id}
+                        setShowMarks = {setShowMarks}
+                    />
+            <div style={{textAlign:"center",display:"flex",flexDirection:"row",marginLeft:"10px"}}>
+                <hr/>{
              viewOrders
             }
             </div>
-            <div style={{textAlign:"center",display:"flex",flexDirection:"row"}}>{viewOrdersSuccess}</div>
+            <div style={{textAlign:"center",display:"flex",flexDirection:"row"}}><hr/>{viewOrdersSuccess}</div>
+            <div style={{textAlign:"center",display:"flex",flexDirection:"row"}}><hr/>{viewOrdersEnd}</div>
         </div>
+        
         }
         </div>
             )

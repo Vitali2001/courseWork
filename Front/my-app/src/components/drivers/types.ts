@@ -5,7 +5,8 @@ export interface IDriverItem{
     firstName: string,
     address: string,
     middleName: string,
-    image: string
+    image: string,
+    raiting: number
 }
 
 export interface DriversState{

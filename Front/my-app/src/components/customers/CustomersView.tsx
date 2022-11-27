@@ -114,6 +114,16 @@ const CustomersView: React.FC = () =>{
           arr.sort(byFieldDown("middleName"))
           setS(arr)
         }
+        if(event.target.value === "raitingUp")
+        {
+          arr.sort(byFieldUp("raiting"))
+          setS(arr)
+        }
+        if(event.target.value === "raitingDown")
+        {
+          arr.sort(byFieldDown("raiting"))
+          setS(arr)
+        }
       }
 
       const listUser = s.map((item) => (
@@ -122,6 +132,7 @@ const CustomersView: React.FC = () =>{
           <th>{item.lastName}</th>
           <th>{item.firstName}</th>
           <th>{item.middleName}</th>
+          <th>{item.raiting} &#11088;</th>
         </tr>
       ));
       const startListUser = list.map((item) => (
@@ -130,6 +141,7 @@ const CustomersView: React.FC = () =>{
           <th>{item.lastName}</th>
           <th>{item.firstName}</th>
           <th>{item.middleName}</th>
+          <th>{item.raiting} &#11088;</th>
         </tr>
       ));
     
@@ -165,6 +177,8 @@ const CustomersView: React.FC = () =>{
                     <option value="lastNameDown">Прізвищем &#8595;</option>
                     <option value="middleNameUp">По-батькові &#8593;</option>
                     <option value="middleNameDown">По-батькові &#8595;</option>
+                    <option value="raitingUp">Рейтингом &#8593;</option>
+                    <option value="raitingDown">Рейтингом &#8595;</option>
                   </select>
                 </p>
               </div>
@@ -184,6 +198,7 @@ const CustomersView: React.FC = () =>{
           <th scope="col">Прізвище</th>
           <th scope="col">Ім`я</th>
           <th scope="col">По-батькові</th>
+          <th scope="col">Рейтинг</th>
         </tr>
       </thead>
           <tbody>

@@ -12,8 +12,9 @@ public class UserGetDTO {
     private String Address;
     private String role;
     private String image;
+    private int raiting;
 
-    public UserGetDTO(String email, String phone, String lastName, String firstName, String middleName, String address, String role, String image) {
+    public UserGetDTO(String email, String phone, String lastName, String firstName, String middleName, String address, String role, String image,int raiting) {
         this.email = email;
         this.phone = phone;
         LastName = lastName;
@@ -22,5 +23,6 @@ public class UserGetDTO {
         Address = address;
         this.role = role;
         this.image = image;
+        this.raiting = raiting;
     }
 }

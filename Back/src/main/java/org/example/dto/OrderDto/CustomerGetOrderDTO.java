@@ -26,12 +26,15 @@ public class CustomerGetOrderDTO {
     private String middleName;
     private String email;
     private String phone;
+    private String address;
+    private String role;
 
     public CustomerGetOrderDTO()
     {
 
     }
-    public CustomerGetOrderDTO(Integer id, String name, String fromRegion, String fromCity, String fromAddress, String toRegion, String toCity, String toAddress, String weight, String image, Double price, Date date, int customerMark, int driverMark, String driverImage, String lastName, String firstName, String middleName, String email, String phone) {
+
+    public CustomerGetOrderDTO(Integer id, String name, String fromRegion, String fromCity, String fromAddress, String toRegion, String toCity, String toAddress, String weight, String image, Double price, Date date, int customerMark, int driverMark, String driverImage, String lastName, String firstName, String middleName, String email, String phone, String address, String role) {
         this.id = id;
         this.name = name;
         this.fromRegion = fromRegion;
@@ -52,5 +55,7 @@ public class CustomerGetOrderDTO {
         this.middleName = middleName;
         this.email = email;
         this.phone = phone;
+        this.address = address;
+        this.role = role;
     }
 }

@@ -5,7 +5,8 @@ export interface ICustomerItem{
     firstName: string,
     address: string,
     middleName: string,
-    image: string
+    image: string,
+    raiting: number
 }
 
 export interface CustomersState{
