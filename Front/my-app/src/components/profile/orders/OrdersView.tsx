@@ -331,17 +331,20 @@ const OrdersView: React.FC = () =>{
                       :
                       <h5 className="modal-title">Поставте оцінку водію</h5> 
                       }
-                      <button
+                     
+                     <button
                         type="button"
                         className="btn-close"
                         data-bs-dismiss="modal"
                         aria-label="Close"
                         onClick={()=>{setShowMarks(false)}}
+                        
                       ></button>
+                     
                     </div>
-                    <div className="modal-body">
+                    <div className="modal-body" style={{textAlign:"center"}}>
                     <div className="star-rating">
-            <div className="star-rating__wrap">
+            <div className="star-rating__wrap" style={{textAlign:"center"}}>
                 <input className="star-rating__input" checked={ch5} type="radio" name="rating" value="5"/>
                 <label className="star-rating__ico fa fa-star-o fa-lg" id="5" onClick={()=>{SetStar(5)}} title="5 out of 5 stars"/>
                 <input className="star-rating__input" checked={ch4} type="radio" name="rating" value="4"/>

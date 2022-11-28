@@ -36,5 +36,6 @@ export interface ICustomerItem{
     firstName: string,
     middleName: string,
     email: string,
-    phone: string
+    phone: string,
+    raiting: number
 }

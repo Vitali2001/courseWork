@@ -10,6 +10,6 @@ export interface ICustomerItem{
 }
 
 export interface CustomersState{
-    list: Array<ICustomerItem>,
+    customers: Array<ICustomerItem>,
     loading: boolean
 }

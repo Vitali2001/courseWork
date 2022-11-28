@@ -28,6 +28,7 @@ const OrdersView: React.FC = () =>{
     
     const url = http.defaults.baseURL
    
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {isAuth,user} = useTypedSelector(store=>store.auth)
     const [order,setOrder] = useState<IOrderItem>();
 
@@ -64,14 +65,6 @@ const OrdersView: React.FC = () =>{
       {
         navigator("/add_order")
       }
-       function OnLoginClick()
-       {
-        navigator("/login")
-       }
-       function OnRegisterClick()
-       {
-          navigator("/register")
-       }
        let arrs: IOrderItem = []
       
        function OnChangeSearch(event){
@@ -327,7 +320,7 @@ const OrdersView: React.FC = () =>{
             <th  onClick={(e)=>{OnClickOrder(item)}}>{item.weight}</th>
             <th  onClick={(e)=>{OnClickOrder(item)}}>{item.price} грн</th>
             {
-              user.role === "driver"
+              user !== undefined && user.role === "driver"
               ?
               (
                 <th><button type="button" className="btn btn-success" onClick={(e)=>{OnAcceptClick(item)}}>Прийняти</button></th>
@@ -336,23 +329,10 @@ const OrdersView: React.FC = () =>{
               <></>
             }
           </tr>));
-
 return(
   <div>
   <HomeLayout/>
-  {
-    !isAuth?
-    (
-      <div style={{textAlign:"center"}}>
-              <h1>Вам необхідно авторизуватися!</h1>
-              <br/>
-              <button type="button" className="btn btn-success" onClick={OnLoginClick}>Вхід</button>
-              &nbsp;&nbsp;&nbsp;
-              <button type="button" className="btn btn-success" onClick={OnRegisterClick}>Реєстрація</button>
-      </div>
-    )
-    :
-    (
+  <div>
       <div>
         <h1  style={{textAlign:"center"}}>Замовлення</h1>
   {
@@ -416,7 +396,7 @@ return(
               <th scope="col">Вага/об`єм</th>
               <th scope="col">Ціна</th>
               {
-                user.role === "driver"
+                user !== undefined && user.role === "driver"
                 ?
                 <th scope="col"></th>
                 :
@@ -441,8 +421,8 @@ return(
     
   
       </div>
-    )
-}
+    
+  </div>
 
   </div>
 

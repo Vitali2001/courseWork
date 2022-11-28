@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const CustomersView: React.FC = () =>{
    
     const navigator = useNavigate()
-    const {list, loading} = useTypedSelector(store=>store.customers); 
+    const {customers, loading} = useTypedSelector(store=>store.customers); 
     const dispatch = useDispatch();
     const url = http.defaults.baseURL
     const [s,setS] = useState(Array<ICustomerItem>)
@@ -53,7 +53,7 @@ const CustomersView: React.FC = () =>{
       function OnChangeSearch(event){
         setSearch(event.target.value);
         
-        list.forEach(function(item: ICustomerItem){
+        customers.forEach(function(item: ICustomerItem){
           let lName : string = item.lastName
           let fName : string = item.firstName
           let mName : string = item.middleName
@@ -135,7 +135,7 @@ const CustomersView: React.FC = () =>{
           <th>{item.raiting} &#11088;</th>
         </tr>
       ));
-      const startListUser = list.map((item) => (
+      const startListUser = customers.map((item) => (
         <tr key={item.email} onClick={(e)=>OnClickCustomer(item)}>
           <th><img src={url+"api/account/files/150_"+item.image} alt=""/></th>
           <th>{item.lastName}</th>

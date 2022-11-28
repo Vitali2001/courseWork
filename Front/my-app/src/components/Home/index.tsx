@@ -1,6 +1,7 @@
 
 import React from "react";
 import HomeLayout from '../../containers/Navbar/index.tsx'
+import HomePageLayout from "./Home.tsx"
 
 
 const HomePage = () => {
@@ -8,10 +9,7 @@ const HomePage = () => {
   return (
     <>
      <HomeLayout/>
-     <br/>
-	 <br/>
-	 <br/>
-	 <h1>Перевезення вантажів</h1>
+      <HomePageLayout/>
     </>
   );
 };

@@ -1,7 +1,7 @@
 import { CustomersState } from "./types.ts";
 
 const initialState : CustomersState = {
-    list: [],
+  customers: [],
     loading: false
 }
 
@@ -16,11 +16,11 @@ export const customerReducer = (state = initialState, action: any): CustomersSta
         return {
           ...state,
           loading: false,
-          list: action.payload,
+          customers: action.payload,
         };
       case "CLEAR_TABLE":
         return{
-          list: [],
+          customers: [],
           loading: false
         }
     }

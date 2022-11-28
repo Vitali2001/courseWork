@@ -20,12 +20,20 @@ const CurrentOrderView: React.FC = () =>{
     const {currentOrder} = useTypedSelector(store=>store.currentOrder)
     const url = http.defaults.baseURL
     const {selected} = useTypedSelector(store=>store.currentOrder) 
-    const {user} = useTypedSelector(store=>store.auth)
-    const {list} = useTypedSelector(store=>store.customers)
+    const {user,isAuth} = useTypedSelector(store=>store.auth)
+    const {customers} = useTypedSelector(store=>store.customers)
     const navigator = useNavigate()
     const [showDate,setShowDate] = React.useState<boolean>(false)
 
     let f: IOrderCurrent = null;
+    function OnLoginClick()
+       {
+        navigator("/login")
+       }
+       function OnRegisterClick()
+       {
+          navigator("/register")
+       }
 
     React.useEffect(()=>{
        if(!selected)
@@ -171,7 +179,7 @@ const CurrentOrderView: React.FC = () =>{
             </>
           );
       }
-    const customer = list.map((item)=>(
+    const customer = customers.map((item)=>(
         <div>
             {
                 item.email === currentOrder.emailCustomer
@@ -183,6 +191,7 @@ const CurrentOrderView: React.FC = () =>{
                         <h2>{item.lastName}</h2>
                         <h2>{item.firstName}</h2>
                         <h2>{item.middleName}</h2>
+                        <h2>{item.raiting} &#11088;</h2>
                     </div>
                 )
                 :
@@ -193,7 +202,7 @@ const CurrentOrderView: React.FC = () =>{
     return(
         <div>
             {
-                selected
+                selected && isAuth
                 ?
                 (
                     <div className="row">
@@ -268,10 +277,14 @@ const CurrentOrderView: React.FC = () =>{
                     
                 )
                 :
-                <div className="row">
-                <HomeLayout/>
-                <h1>Сталася помилка</h1>
-                </div>
+                <div style={{textAlign:"center"}}>
+                    <HomeLayout/>
+              <h1>Вам необхідно авторизуватися!</h1>
+              <br/>
+              <button type="button" className="btn btn-success" onClick={OnLoginClick}>Вхід</button>
+              &nbsp;&nbsp;&nbsp;
+              <button type="button" className="btn btn-success" onClick={OnRegisterClick}>Реєстрація</button>
+      </div>
             }
         </div>
     )

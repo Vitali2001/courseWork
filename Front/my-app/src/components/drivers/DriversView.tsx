@@ -13,7 +13,7 @@ const DriversView: React.FC = () =>{
    
     const navigator = useNavigate()
     const [search,setSearch] = useState('')
-    const {list, loading} = useTypedSelector(store=>store.drivers); 
+    const {drivers, loading} = useTypedSelector(store=>store.drivers); 
     const [s,setS] = useState(Array<IDriverItem>)
     const dispatch = useDispatch();
     const [warningSearch, setWarningSearch] = useState("");
@@ -55,7 +55,7 @@ const DriversView: React.FC = () =>{
       function OnChangeSearch(event){
         setSearch(event.target.value);
         
-        list.forEach(function(item: IDriverItem){
+        drivers.forEach(function(item: IDriverItem){
           let lName : string = item.lastName
           let fName : string = item.firstName
           let mName : string = item.middleName
@@ -87,7 +87,7 @@ const DriversView: React.FC = () =>{
       {
         setValuesort(event.target.value)
         console.log(event.target.value)
-        let arr = list;
+        let arr = drivers;
         if(event.target.value === "nameDown")
         {
           arr.sort(byFieldUp("firstName"))
@@ -137,7 +137,7 @@ const DriversView: React.FC = () =>{
           <th>{item.middleName}</th>
           <th>{item.raiting} &#11088;</th>
         </tr>));
-      const startListUser = list.map((item) => (
+      const startListUser = drivers.map((item) => (
         <tr key={item.email} onClick={(e)=>OnClickDriver(item)}>
           <th><img src={url+"api/account/files/150_"+item.image} alt=""/></th>
           <th>{item.lastName}</th>

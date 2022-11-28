@@ -1,7 +1,7 @@
 import { DriversState } from "./types.ts";
 
 const initialState : DriversState = {
-    list: [],
+  drivers: [],
     loading: false
 }
 
@@ -16,11 +16,11 @@ export const driverReducer = (state = initialState, action: any): DriversState =
         return {
           ...state,
           loading: false,
-          list: action.payload,
+          drivers: action.payload,
         };
       case "CLEAR_TABLE":
         return{
-          list: [],
+          drivers: [],
           loading: false
         }
     }

@@ -10,6 +10,6 @@ export interface IDriverItem{
 }
 
 export interface DriversState{
-    list: Array<IDriverItem>,
+    drivers: Array<IDriverItem>,
     loading: boolean
 }
