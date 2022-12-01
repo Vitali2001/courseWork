@@ -64,6 +64,10 @@ const OrdersView: React.FC = () =>{
           })
           navigator("/current_user")
     }
+    function AddOrder()
+    {
+        navigator("/add_order")
+    }
     async function DeleteOrder(item: number)
     {
         if(!executeRecaptcha)
@@ -634,7 +638,7 @@ const OrdersView: React.FC = () =>{
             
         
         <UserNavbar/>
-                <h1 style={{textAlign:"center"}}>Замовлення</h1>
+                <h1 style={{textAlign:"center"}}>Мої замовлення</h1>
                 {
                     loading?<EclipseWidgetContainer/>:<></>
                 }
@@ -682,6 +686,10 @@ const OrdersView: React.FC = () =>{
                         id = {id}
                         setShowMarks = {setShowMarks}
                     />
+                    <button type="button" className="btn btn-success" style={{margin:"20px",marginLeft:"630px"}}
+                     onClick={AddOrder}>
+                        Додати замовлення
+                      </button>
             <div style={{textAlign:"center",display:"flex",flexDirection:"row",marginLeft:"10px"}}>
                 <hr/>{
              viewOrders

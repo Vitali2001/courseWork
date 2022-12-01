@@ -55,7 +55,7 @@ export const CreateOrderLayout: React.FC = () => {
                 console.log(result.data)
                 setLoad(prev=>!prev)
                 toastr.success("Ви додали замовлення!","Додавання замовлення")
-            navigator("/orders")
+            navigator("/ordersProfile")
             }
         }
         catch(ex){
