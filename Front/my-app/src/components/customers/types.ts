@@ -13,3 +13,30 @@ export interface CustomersState{
     customers: Array<ICustomerItem>,
     loading: boolean
 }
+export interface IOrderItemForCustomer{
+    id: number,
+    name: string,
+    fromRegion: string,
+    fromCity: string,
+    fromAddress: string,
+    toRegion: string,
+    toCity: string,
+    toAddress: string,
+    weight: string,
+    image: string,
+    price: number,
+    date: Date,
+    customerMark: number,
+    driverMark: number 
+    driverImage?: string,
+    lastName?: string,
+    firstName?: string,
+    middleName?: string,
+    email?: string,
+    phone?: string,
+    address?: string,
+    role?: string
+}
+export interface  IPostOrderForDriver{
+    email: string,
+}

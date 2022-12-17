@@ -19,7 +19,7 @@ const ProfileInfo: React.FC = () =>{
             <UserNavbar/>
             <div style={{textAlign:"center"}}>
 
-            <div className="card mb-3" style={{maxWidth:"1300px",textAlign:"center"}}>
+            <div className="card mb-3" style={{maxWidth:"1300px",textAlign:"center",marginLeft:"60px"}}>
                 <div className="row g-0">
                     <div className="col-md-4">
                     <img src={url+"api/account/files/600_"+user.image} style={{height:"400px"}} className="img-fluid rounded-start" alt="..." />

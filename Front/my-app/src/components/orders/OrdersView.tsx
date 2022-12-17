@@ -94,10 +94,10 @@ const OrdersView: React.FC = () =>{
         }
        }
        function byFieldUp(field) {
-        return (a, b) => a[field] > b[field] ? 1 : -1;
+        return (a, b) => a[field] < b[field] ? 1 : -1;
       }
       function byFieldDown(field) {
-        return (a, b) => a[field] < b[field] ? 1 : -1;
+        return (a, b) => a[field] > b[field] ? 1 : -1;
       }
       function OnChangeSort(event)
       {

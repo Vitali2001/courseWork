@@ -83,7 +83,7 @@ const CustomersView: React.FC = () =>{
       {
         setValuesort(event.target.value)
         console.log(event.target.value)
-        let arr = list;
+        let arr = customers;
         if(event.target.value === "nameDown")
         {
           arr.sort(byFieldUp("firstName"))
@@ -125,6 +125,7 @@ const CustomersView: React.FC = () =>{
           setS(arr)
         }
       }
+      
 
       const listUser = s.map((item) => (
         <tr key={item.email} onClick={(e)=>OnClickCustomer(item)}>

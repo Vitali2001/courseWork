@@ -186,7 +186,7 @@ const OrdersView: React.FC = () =>{
         try{
             const resp = await http.post("api/orders/setMarkDriver",values)
             if(resp.data === "ok")
-            toastr.success("Ви Поставили оцінку замовнику!","Успіх!")
+            toastr.success("Ви Поставили оцінку замовнику!","Замовлення завершене!")
             setShowMarks(false)
             GetOrders();
         }
@@ -214,7 +214,7 @@ const OrdersView: React.FC = () =>{
             const resp = await http.post("api/orders/setMarkCustomer",values)
             console.log(resp)
             if(resp.data === "ok")
-            toastr.success("Ви Поставили оцінку водію!","Успіх!")
+            toastr.success("Ви Поставили оцінку водію!","Замовлення завершене!")
             setShowMarks(false)
             GetOrdersCustomer();
         }

@@ -1,6 +1,6 @@
 import * as React from "react";
 import http from "../../http.common"
-import {IDeleteUser} from "./types.ts"
+import {IDeleteUser,IOrderItemForCustomer,IPostOrderForDriver} from "./types.ts"
 import HomeLayout from "../../containers/Navbar/index.tsx";
 import {useTypedSelector} from "../../hooks/usedTypedSelector.ts"
 import { useNavigate } from 'react-router-dom';
@@ -18,6 +18,7 @@ import EclipseWidgetContainer from "../Eclipse/index.tsx";
 const CurrentUserView: React.FC = () =>{
 
     const [isLoad, setLoad] = React.useState<boolean>(false);
+    const [ordersCustomer,setOrdersCustomer] = React.useState<IOrderItemForCustomer>([])
     const {isAuth} = useTypedSelector(store=>store.auth) 
     const dispatch = useDispatch();
     const {executeRecaptcha } = useGoogleReCaptcha();
@@ -31,7 +32,26 @@ const CurrentUserView: React.FC = () =>{
     React.useEffect(()=>{
         if(!selected)
         window.history.back();
+        if(currentUser.role === "customer" && currentUser !== undefined)
+        GetOrdersCustomer()
     })
+    let OrdersCustomer: IOrderItemForCustomer = [];
+    async function GetOrdersCustomer()
+    {
+            const values: IPostOrderForDriver = {
+                email: currentUser.email,
+            }
+            const resp = await http.post("api/orders/getOrderCustomer",values)
+            OrdersCustomer = resp.data;
+            setOrdersCustomer(OrdersCustomer)
+            const result = await http.post("api/orders/getOrdersForCustomers",values)
+            dispatch({
+                type: "GET_LIST_ORDERS_SUCCESS",
+                payload: result.data,
+            });
+            console.log(result.data)
+            
+    }
     function OnLoginClick()
        {
         navigator("/login")
@@ -94,7 +114,7 @@ const CurrentUserView: React.FC = () =>{
                       })
                     setEmail("")
                     setShowDel(false);
-                    window.history.back();
+                    navigator("/home")
                     
                 }
             }
@@ -151,6 +171,28 @@ const CurrentUserView: React.FC = () =>{
             </>
           );
       }
+      function OnClickOrder(item: any)
+      {
+        dispatch({
+          type: "SET_CURRENT_ORDER",
+          payload: item
+        })
+        navigator("/current_order")
+      }
+        const viewOrders = ordersCustomer.map((item)=>(
+    <div className="card text-bg-primary mb-3" style={{margin:"10px" , width:"300px"}} onClick={()=>{OnClickOrder(item)}}>
+  <div className="card-header"><h1>{item.name}</h1></div>
+  <div className="card-body">
+    <h5 className="card-title">{item.price} грн</h5>
+    <hr/>
+    <p className="card-text">Звідки: {item.fromRegion}</p>
+    <hr/>
+    <p className="card-text">Куди: {item.toRegion}</p>
+    <hr/>
+    <p className="card-text">Об`єм/маса: {item.weight}</p>
+  </div>
+</div>
+   ));
     
 
     return(
@@ -162,7 +204,7 @@ const CurrentUserView: React.FC = () =>{
                     <div className="row">
                         <HomeLayout/>
                     <div style={{textAlign:"center",marginTop:"50px"}}>
-                    <div className="card mb-3" style={{maxWidth:"1300px",textAlign:"center"}}>
+                    <div className="card mb-3" style={{maxWidth:"1300px",textAlign:"center",marginLeft:"60px"}}>
                 <div className="row g-0">
                     <div className="col-md-4">
                     <img src={url+"api/account/files/600_"+currentUser.image} style={{height:"400px"}} className="img-fluid rounded-start" alt="..." />
@@ -190,6 +232,19 @@ const CurrentUserView: React.FC = () =>{
                 </div>
                 </div>
                     </div>
+                    {
+                        ordersCustomer !== undefined && ordersCustomer.length > 0
+                        ?
+                        <div>
+                            <div>
+                        <h1 style={{textAlign:"center"}}>Замовлення</h1>
+                        <div style={{textAlign:"center",display:"flex",flexDirection:"row" ,
+                        flexWrap:"wrap",marginLeft:"60px"}}>{viewOrders}</div>
+                    </div>
+                        </div>
+                        :
+                        <div></div>
+                    }
                     {
                         user !== undefined && user.role === "admin"
                         ?
