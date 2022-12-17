@@ -1,6 +1,6 @@
 import * as React from "react";
 import http from "../../http.common"
-import {IDeleteUser,IOrderItemForCustomer,IPostOrderForDriver} from "./types.ts"
+import {IDeleteUser,IOrderItemForCustomer,IPostOrderForDriver,IOrderCurrent} from "./types.ts"
 import HomeLayout from "../../containers/Navbar/index.tsx";
 import {useTypedSelector} from "../../hooks/usedTypedSelector.ts"
 import { useNavigate } from 'react-router-dom';
@@ -32,7 +32,7 @@ const CurrentUserView: React.FC = () =>{
     React.useEffect(()=>{
         if(!selected)
         window.history.back();
-        if(currentUser.role === "customer" && currentUser !== undefined)
+        if(currentUser !== undefined && currentUser.role === "customer")
         GetOrdersCustomer()
     })
     let OrdersCustomer: IOrderItemForCustomer = [];
@@ -173,9 +173,24 @@ const CurrentUserView: React.FC = () =>{
       }
       function OnClickOrder(item: any)
       {
+
+           const order :IOrderCurrent = {
+            id: item.id,
+            name: item.name,
+            fromRegion: item.fromRegion,
+            fromCity: item.fromCity,
+            fromAddress: item.fromAddress,
+            toRegion: item.toRegion,
+            toCity: item.toCity,
+            toAddress: item.toAddress,
+            weight: item.weight,
+            image: item.image,
+            price: item.price,
+            emailCustomer: currentUser.email
+        }
         dispatch({
           type: "SET_CURRENT_ORDER",
-          payload: item
+          payload: order
         })
         navigator("/current_order")
       }

@@ -6,13 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="b93082d9-aa34-4701-b9c7-c6405bd76d09" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/configuration/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/configuration/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploaded/1200_51f5d196-2138-40a7-a5e5-1a7c5881bdcf.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploaded/150_51f5d196-2138-40a7-a5e5-1a7c5881bdcf.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploaded/300_51f5d196-2138-40a7-a5e5-1a7c5881bdcf.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploaded/32_51f5d196-2138-40a7-a5e5-1a7c5881bdcf.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploaded/600_51f5d196-2138-40a7-a5e5-1a7c5881bdcf.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Front/my-app/src/components/profile/orders/OrdersView.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Front/my-app/src/components/profile/orders/OrdersView.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/1200_5c0a330c-69ed-4f96-8c31-2a0e4d2e78ce.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/1200_edd73055-b3c4-495c-824e-844140199ccf.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/150_5c0a330c-69ed-4f96-8c31-2a0e4d2e78ce.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/150_edd73055-b3c4-495c-824e-844140199ccf.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/300_5c0a330c-69ed-4f96-8c31-2a0e4d2e78ce.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/300_edd73055-b3c4-495c-824e-844140199ccf.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/32_5c0a330c-69ed-4f96-8c31-2a0e4d2e78ce.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/32_edd73055-b3c4-495c-824e-844140199ccf.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/600_5c0a330c-69ed-4f96-8c31-2a0e4d2e78ce.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploaded/600_edd73055-b3c4-495c-824e-844140199ccf.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
